@@ -57,30 +57,30 @@ export default function Home() {
       {/* Welcome & Stats */}
       <motion.div variants={itemVariants} className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Bonjour, Futurs Bacheliers ! 👋</h1>
-          <p className="text-muted-foreground text-sm">Prêt pour votre révision du jour ?</p>
+          <h1 className="text-2xl font-bold tracking-tight">Bonjour, {useAppStore.getState().studentName || 'Cher Bachelier'} ! 👋</h1>
+          <p className="text-muted-foreground text-sm font-medium">Prêt à conquérir ton BAC aujourd'hui ?</p>
         </div>
         <div className="flex gap-2">
-          <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 flex gap-1 items-center px-2 py-1">
-            <Trophy className="h-3 w-3" />
-            {points} pts
+          <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 flex gap-1.5 items-center px-3 py-1.5 rounded-xl">
+            <Trophy className="h-3.5 w-3.5" />
+            <span className="font-bold">{points} pts</span>
           </Badge>
-          <Badge variant="secondary" className="bg-orange-100 text-orange-600 border-orange-200 flex gap-1 items-center px-2 py-1">
-            🔥 {streak} j
+          <Badge variant="secondary" className="bg-orange-100 text-orange-600 border-orange-200 flex gap-1.5 items-center px-3 py-1.5 rounded-xl">
+            <span className="font-bold">🔥 {streak} j</span>
           </Badge>
         </div>
       </motion.div>
 
       {/* Main Goal Progress */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-primary to-blue-600 text-white border-none shadow-lg overflow-hidden relative">
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <Target className="h-24 w-24" />
+        <Card className="bg-gradient-to-br from-indigo-600 via-primary to-blue-500 text-white border-none shadow-xl shadow-primary/20 overflow-hidden relative group">
+          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+            <Target className="h-28 w-28" />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Activity className="h-5 w-5" />
-              Objectif BAC {terminal || 'EA'} 2026
+            <CardTitle className="text-lg flex items-center gap-2 font-black italic">
+              <Activity className="h-5 w-5 animate-pulse" />
+              OBJECTIF BAC {terminal || '2026'}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

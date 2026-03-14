@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { AppState, StudySession, MockExamResult, Achievement, TerminalSerie } from '@/lib/index';
+import { AppState, StudySession, MockExamResult, Achievement, TerminalSerie, UserProgress } from '@/lib/index';
 import { getAchievementsForTerminal } from '@/data/achievements-by-series';
 
 interface AppActions {
   setProfile: (name: string, terminal: TerminalSerie) => void;
   setStudentName: (name: string) => void;
   setTerminal: (terminal: TerminalSerie) => void;
-  completeExercise: (subjectId: string, exerciseId: string, score: number) => void;
+  completeExercise: (subjectId: string, exerciseId: string, isCorrect: boolean, points: number) => void;
   addSession: (session: StudySession) => void;
   addMockResult: (result: MockExamResult) => void;
   updatePoints: (points: number) => void;
-  updateStreak: () => void;
+  updateStreak: (date?: string) => void;
   resetProgress: () => void;
   resetAll: () => void;
 }
@@ -20,9 +20,9 @@ export const useAppStore = create<AppState & AppActions>()(
   persist(
     (set, get) => ({
       studentName: '',
-      terminal: null,
+      terminal: null as TerminalSerie | null,
       onboardingDone: false,
-      progress: {},
+      progress: {} as Record<string, UserProgress>,
       achievements: [] as Achievement[],
       sessions: [] as StudySession[],
       points: 0,
@@ -36,12 +36,12 @@ export const useAppStore = create<AppState & AppActions>()(
           studentName: name.trim(),
           terminal,
           onboardingDone: true,
-          progress: {},
+          progress: {} as Record<string, UserProgress>,
           sessions: [],
           points: 0,
           streak: 0,
           lastStudyDate: '',
-          completedExercises: new Set(),
+          completedExercises: new Set<string>(),
           mockExamResults: [],
           achievements: getAchievementsForTerminal(terminal),
         }));
@@ -61,7 +61,7 @@ export const useAppStore = create<AppState & AppActions>()(
         achievements: getAchievementsForTerminal(terminal),
       })),
 
-      completeExercise: (subjectId, exerciseId, score) => {
+      completeExercise: (subjectId, exerciseId, isCorrect, points) => {
         set((state) => {
           const currentProgress = state.progress[subjectId] || {
             subjectId,
@@ -73,7 +73,7 @@ export const useAppStore = create<AppState & AppActions>()(
 
           if (!currentProgress.completedExercises.includes(exerciseId)) {
             const newCompleted = [...currentProgress.completedExercises, exerciseId];
-            const newScores = { ...currentProgress.scores, [exerciseId]: score };
+            const newScores = { ...currentProgress.scores, [exerciseId]: isCorrect ? 100 : 0 };
             const newCompletedSet = new Set(state.completedExercises).add(exerciseId);
             
             return {
@@ -84,11 +84,11 @@ export const useAppStore = create<AppState & AppActions>()(
                   completedExercises: newCompleted,
                   scores: newScores,
                   lastStudied: new Date().toISOString(),
-                  mastery: Math.min(100, Math.round((newCompleted.length / 50) * 100)), // Based on average total
+                  mastery: Math.min(100, Math.round((newCompleted.length / 50) * 100)),
                 },
               },
               completedExercises: newCompletedSet,
-              points: state.points + (score > 80 ? 10 : 5),
+              points: state.points + (isCorrect ? points : 0),
             };
           }
           return state;

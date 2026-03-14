@@ -10,10 +10,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 const SERIES: { value: 'A' | 'B' | 'C' | 'EA'; label: string }[] = [
-  { value: 'A', label: 'Terminale A (Littéraire)' },
-  { value: 'B', label: 'Terminale B (Économie)' },
-  { value: 'C', label: 'Terminale C (Scientifique)' },
-  { value: 'EA', label: 'Terminale EA (Eau & Assainissement)' },
+  { value: 'A', label: 'Série A (Littéraire)' },
+  { value: 'B', label: 'Série B (Économie)' },
+  { value: 'C', label: 'Série C (Scientifique)' },
+  { value: 'EA', label: 'Série EA (Technique)' },
 ];
 
 export default function Settings() {
@@ -52,7 +52,7 @@ export default function Settings() {
       animate={{ opacity: 1 }}
       className="flex flex-col gap-6 p-4 pt-6 pb-24 bg-accent/5 min-h-screen"
     >
-      <h1 className="text-2xl font-bold tracking-tight">Paramètres</h1>
+      <h1 className="text-2xl font-black italic uppercase tracking-tight">Paramètres</h1>
 
       <Card className="border-none shadow-sm">
         <CardContent className="p-4 space-y-4">
@@ -82,7 +82,7 @@ export default function Settings() {
         <CardContent className="p-4 space-y-4">
           <div className="flex items-center gap-2 text-primary font-semibold">
             <GraduationCap className="h-5 w-5" />
-            <span>Série</span>
+            <span>SÉRIE</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
             {SERIES.map((s) => (
@@ -155,6 +155,15 @@ export default function Settings() {
           )}
         </CardContent>
       </Card>
+
+      <div className="mt-8 mb-4 text-center space-y-2">
+        <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">
+          Althoria v1.2.0
+        </p>
+        <p className="text-[10px] text-muted-foreground/60 font-medium">
+          Conçu et développé avec passion par <span className="text-primary/60 font-black">DeOs</span>
+        </p>
+      </div>
     </motion.div>
   );
 }

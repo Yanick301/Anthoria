@@ -11,7 +11,10 @@ import Subjects from '@/pages/Subjects';
 import SubjectDetail from '@/pages/SubjectDetail';
 import Lesson from '@/pages/Lesson';
 import Exercises from '@/pages/Exercises';
+import ExercisePractice from '@/pages/ExercisePractice';
+import Quiz from '@/pages/Quiz';
 import MockExam from '@/pages/MockExam';
+import MockExamSession from '@/pages/MockExamSession';
 import Planner from '@/pages/Planner';
 import ProgressPage from '@/pages/Progress';
 import GuidedPath from '@/pages/GuidedPath';
@@ -38,7 +41,9 @@ export default function App() {
           <Route path={ROUTE_PATHS.SUBJECTS} element={<Subjects />} />
           <Route path={ROUTE_PATHS.SUBJECT_DETAIL} element={<SubjectDetail />} />
           <Route path={ROUTE_PATHS.EXERCISES} element={<Exercises />} />
+          <Route path={ROUTE_PATHS.EXERCISE_PRACTICE} element={<ExercisePractice />} />
           <Route path={ROUTE_PATHS.MOCK_EXAM} element={<MockExam />} />
+          <Route path={ROUTE_PATHS.MOCK_EXAM_SESSION} element={<MockExamSession />} />
           <Route path={ROUTE_PATHS.PLANNER} element={<Planner />} />
           <Route path={ROUTE_PATHS.GUIDED_PATH} element={<GuidedPath />} />
           <Route path={ROUTE_PATHS.PROGRESS} element={<ProgressPage />} />
@@ -46,11 +51,11 @@ export default function App() {
           
           {/* Specific learning pages */}
           <Route path={ROUTE_PATHS.LESSON} element={<Lesson />} />
+          <Route path={ROUTE_PATHS.QUIZ} element={<Quiz />} />
           
           {/* Placeholders for secondary features */}
-          <Route path={ROUTE_PATHS.FLASHCARDS} element={<div className="p-8 text-center">Fonctionnalité Flashcards à venir.</div>} />
-          <Route path={ROUTE_PATHS.QUIZ} element={<div className="p-8 text-center">Fonctionnalité Quiz à venir.</div>} />
-          <Route path={ROUTE_PATHS.ACHIEVEMENTS} element={<div className="p-8 text-center">Fonctionnalité Badges à venir.</div>} />
+          <Route path={ROUTE_PATHS.FLASHCARDS} element={<div className="p-8 text-center bg-accent/10 min-h-screen">Fonctionnalité Flashcards à venir.</div>} />
+          <Route path={ROUTE_PATHS.ACHIEVEMENTS} element={<div className="p-8 text-center bg-accent/10 min-h-screen">Fonctionnalité Badges à venir.</div>} />
         </Route>
         
         {/* Fallback */}

@@ -51,11 +51,11 @@ export default function Subjects() {
     >
       {/* Header & Search */}
       <motion.div variants={itemVariants} className="space-y-4">
-        <h1 className="text-2xl font-bold tracking-tight">
-          {terminal ? `Matières du BAC ${terminal}` : 'Matières du BAC'}
+        <h1 className="text-2xl font-black italic uppercase tracking-tight">
+          {terminal ? `SÉRIE ${terminal} • ALTHORIA` : 'SÉRIE BAC • ALTHORIA'}
         </h1>
-        <p className="text-muted-foreground text-sm">
-          {SUBJECTS.length} matières clés pour réussir votre diplôme.
+        <p className="text-muted-foreground text-sm font-medium">
+          {SUBJECTS.length} matières clés pour décrocher ton diplôme.
         </p>
         
         <div className="relative group">

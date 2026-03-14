@@ -26,16 +26,19 @@ export function Layout() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xs font-black text-primary-foreground shadow-md">
-              {terminal ?? 'EA'}
+            <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xs font-black text-primary-foreground shadow-lg border border-white/20">
+              {terminal ?? 'BA'}
             </div>
             <div className="flex flex-col">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80">
                 Althoria • {serieLabel}
               </span>
-              <p className="text-sm font-bold leading-tight">
-                Bonjour, <span className="text-primary">{shortName}</span>
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-bold leading-tight">
+                  Salut, <span className="text-foreground">{shortName}</span>
+                </p>
+                <span className="text-[8px] font-medium bg-accent/10 px-1.5 py-0.5 rounded text-accent/60 uppercase tracking-tighter">By DeOs</span>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-3">

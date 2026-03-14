@@ -9,6 +9,7 @@ export const ROUTE_PATHS = {
   FLASHCARDS: '/matieres/:id/flashcards',
   QUIZ: '/matieres/:id/quiz',
   EXERCISES: '/exercices',
+  EXERCISE_PRACTICE: '/exercices/:subjectId/pratique',
   EXERCISE_DETAIL: '/exercices/:id',
   MOCK_EXAM: '/bac-blanc',
   MOCK_EXAM_SESSION: '/bac-blanc/session',

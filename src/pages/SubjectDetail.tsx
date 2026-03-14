@@ -77,10 +77,10 @@ export default function SubjectDetail() {
           <div className="text-9xl font-black">{subject.icon}</div>
         </div>
         <div className="relative z-10">
-          <Badge className="bg-white/20 hover:bg-white/30 text-white border-none mb-2">
-            {terminal ? `Terminale ${terminal}` : 'Terminale'}
+          <Badge className="bg-white/20 hover:bg-white/30 text-white border border-white/30 mb-2 backdrop-blur-sm px-3 py-1 rounded-xl font-black italic uppercase tracking-widest text-[10px]">
+            {terminal ? `Série ${terminal}` : 'Série'}
           </Badge>
-          <h1 className="text-2xl font-bold leading-tight">{subject.name}</h1>
+          <h1 className="text-3xl font-black italic leading-tight text-white drop-shadow-md">{subject.name}</h1>
           <div className="flex items-center gap-2 mt-2">
             <Progress value={subjectProgress.mastery} className="h-2 w-24 bg-white/20" />
             <span className="text-xs font-bold">{subjectProgress.mastery}% Maîtrisé</span>
@@ -139,7 +139,7 @@ export default function SubjectDetail() {
                     <h3 className="font-bold text-primary mb-1">Entraînement Libre</h3>
                     <p className="text-xs text-muted-foreground mb-4">Pratiquez les {subject.totalExercises} exercices de cette matière à votre rythme.</p>
                     <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl shadow-md gap-2" asChild>
-                       <NavLink to={ROUTE_PATHS.EXERCISES}>
+                       <NavLink to={ROUTE_PATHS.EXERCISE_PRACTICE.replace(':subjectId', subject.id)}>
                           <Play className="h-4 w-4" />
                           Commencer l'entraînement
                        </NavLink>

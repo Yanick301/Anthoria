@@ -92,7 +92,7 @@ export default function MockExam() {
               </div>
 
               <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl shadow-lg h-12 font-bold gap-2" asChild>
-                 <NavLink to={ROUTE_PATHS.EXERCISES}>
+                 <NavLink to={ROUTE_PATHS.MOCK_EXAM_SESSION}>
                     <Play className="h-4 w-4 fill-current" />
                     Lancer le BAC Blanc
                  </NavLink>

@@ -78,8 +78,8 @@ export default function ProgressPage() {
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-6">
                <div>
-                  <h1 className="text-xl font-bold">Votre Progression</h1>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Objectif BAC {terminal || 'EA'} 2026</p>
+                  <h1 className="text-xl font-black italic tracking-tight uppercase">VOTRE PROGRESSION</h1>
+                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Objectif BAC {terminal || '2026'}</p>
                </div>
                <div className="bg-primary/20 p-2 rounded-xl border border-primary/30 flex items-center gap-2">
                   <Star className="h-4 w-4 text-primary fill-primary" />
@@ -117,7 +117,7 @@ export default function ProgressPage() {
       <motion.div variants={itemVariants}>
         <Card className="border-none shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Récap Terminale {terminal || 'EA'}</CardTitle>
+            <CardTitle className="text-base font-black italic uppercase tracking-tight">RÉCAP SÉRIE {terminal || 'ALTHORIA'}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {avgBac !== null && (

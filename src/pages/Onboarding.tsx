@@ -65,13 +65,13 @@ const Onboarding: React.FC = () => {
                   className="space-y-2"
                 >
                   <p className="text-xs font-semibold tracking-widest uppercase text-primary/80">
-                    Révision BAC
+                    Propulser ton avenir
                   </p>
                   <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
                     Althoria
                   </h1>
-                  <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-                    Ton espace de révision intelligent pour le BAC au Bénin, série par série.
+                  <p className="text-sm text-muted-foreground max-w-sm mx-auto font-medium">
+                    Ton compagnon de réussite intelligent pour le BAC au Bénin.
                   </p>
                 </motion.div>
                 <motion.div
@@ -88,6 +88,14 @@ const Onboarding: React.FC = () => {
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </motion.div>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  className="text-[10px] text-muted-foreground/60 font-medium uppercase tracking-[0.1em]"
+                >
+                  Créé avec passion par <span className="text-primary/60 font-black">DeOs</span>
+                </motion.p>
               </div>
             </motion.div>
           </motion.div>
@@ -128,7 +136,7 @@ const Onboarding: React.FC = () => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ex: Althéa, DeOs, Samira..."
+                    placeholder=""
                     autoComplete="given-name"
                     className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   />
@@ -177,7 +185,7 @@ const Onboarding: React.FC = () => {
 
                 <div className="space-y-2">
                   <h2 className="text-xl font-bold text-foreground leading-tight">
-                    Quelle terminale, {name.trim() || 'futur bachelier'} ?
+                    Quel BAC prépares-tu, {name.trim() || 'futur bachelier'} ?
                   </h2>
                   <p className="text-sm text-muted-foreground">
                     Les matières et exercices seront adaptés à ta série.

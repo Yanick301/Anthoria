@@ -52,9 +52,9 @@ export default function Exercises() {
     const isCorrect = selectedAnswer === currentExercise.correctAnswer;
     if (isCorrect) {
       setScore(prev => prev + 1);
-      completeExercise(currentExercise.subjectId, currentExercise.id, 100);
+      completeExercise(currentExercise.subjectId, currentExercise.id, true, currentExercise.points);
     } else {
-      completeExercise(currentExercise.subjectId, currentExercise.id, 0);
+      completeExercise(currentExercise.subjectId, currentExercise.id, false, 0);
     }
   };
 
@@ -84,8 +84,8 @@ export default function Exercises() {
         <div className="bg-primary/10 h-24 w-24 rounded-full flex items-center justify-center mb-6">
           <Trophy className="h-12 w-12 text-primary" />
         </div>
-        <h1 className="text-3xl font-bold mb-2">Session terminée !</h1>
-        <p className="text-muted-foreground mb-8">Excellent travail, vous progressez vers votre BAC.</p>
+        <h1 className="text-3xl font-black tracking-tight mb-2">Session terminée !</h1>
+        <p className="text-muted-foreground mb-8 font-medium">Excellente progression vers ton diplôme.</p>
         
         <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-8">
            <Card className="p-4 bg-accent/20 border-none shadow-sm">
@@ -110,7 +110,7 @@ export default function Exercises() {
     );
   }
 
-  const subject = SUBJECTS.find(s => s.id === currentExercise.subjectId);
+  const subject = subjects.find(s => s.id === currentExercise.subjectId);
 
   return (
     <div className="flex flex-col min-h-screen bg-accent/5 p-4 pt-6">
