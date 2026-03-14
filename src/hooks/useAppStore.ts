@@ -12,8 +12,11 @@ interface AppActions {
   addMockResult: (result: MockExamResult) => void;
   updatePoints: (points: number) => void;
   updateStreak: (date?: string) => void;
+  checkAchievements: () => void;
   resetProgress: () => void;
   resetAll: () => void;
+  incrementInvites: () => void;
+  setLastSeenVersion: (version: string) => void;
 }
 
 export const useAppStore = create<AppState & AppActions>()(
@@ -30,6 +33,8 @@ export const useAppStore = create<AppState & AppActions>()(
       lastStudyDate: '',
       completedExercises: new Set<string>(),
       mockExamResults: [] as MockExamResult[],
+      invitesSent: 0,
+      lastSeenVersion: '1.0.0',
 
       setProfile: (name, terminal) => {
         set(() => ({
@@ -44,6 +49,8 @@ export const useAppStore = create<AppState & AppActions>()(
           completedExercises: new Set<string>(),
           mockExamResults: [],
           achievements: getAchievementsForTerminal(terminal),
+          invitesSent: 0,
+          lastSeenVersion: '1.0.0',
         }));
       },
 
@@ -93,6 +100,7 @@ export const useAppStore = create<AppState & AppActions>()(
           }
           return state;
         });
+        get().checkAchievements();
       },
 
       addSession: (session) => {
@@ -106,6 +114,7 @@ export const useAppStore = create<AppState & AppActions>()(
           mockExamResults: [...state.mockExamResults, result],
           points: state.points + (result.score / result.total > 0.8 ? 50 : 20),
         }));
+        get().checkAchievements();
       },
 
       updatePoints: (pts) => set((state) => ({ points: state.points + pts })),
@@ -124,6 +133,41 @@ export const useAppStore = create<AppState & AppActions>()(
           streak: lastDate === yesterdayStr ? state.streak + 1 : 1,
           lastStudyDate: today,
         }));
+        get().checkAchievements();
+      },
+ 
+      checkAchievements: () => {
+        const state = get();
+        const newAchievements = state.achievements.map(achievement => {
+          if (achievement.unlocked) return achievement;
+ 
+          const requirements = achievement.requirement.split(',');
+          const isMet = requirements.every(req => {
+            const [type, value, threshold] = req.split(':');
+            
+            switch (type) {
+              case 'streak':
+                return state.streak >= parseInt(value);
+              case 'mock-exam':
+                return state.mockExamResults.some(r => (r.score / r.total * 20) >= parseInt(value));
+              case 'exercises':
+                return state.completedExercises.size >= parseInt(value);
+              case 'subject':
+                return (state.progress[value]?.mastery || 0) >= parseInt(threshold);
+              default:
+                return false;
+            }
+          });
+ 
+          if (isMet) {
+            return { ...achievement, unlocked: true, unlockedAt: new Date().toISOString() };
+          }
+          return achievement;
+        });
+ 
+        if (JSON.stringify(newAchievements) !== JSON.stringify(state.achievements)) {
+          set({ achievements: newAchievements });
+        }
       },
 
       resetProgress: () => set((state) => ({
@@ -149,7 +193,13 @@ export const useAppStore = create<AppState & AppActions>()(
         completedExercises: new Set(),
         mockExamResults: [],
         achievements: [],
+        invitesSent: 0,
+        lastSeenVersion: '1.0.0',
       }),
+
+      incrementInvites: () => set((state) => ({ invitesSent: (state.invitesSent || 0) + 1 })),
+
+      setLastSeenVersion: (version) => set({ lastSeenVersion: version }),
     }),
     {
       name: 'bac-ea-storage',

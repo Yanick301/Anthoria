@@ -21,12 +21,15 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
 
 export default function MockExam() {
   const navigate = useNavigate();
   const { mockExamResults, terminal } = useAppStore();
   const mockExams = getMockExamsForTerminal(terminal);
   const subjects = getSubjectsForTerminal(terminal);
+
+  const [selectedSubjectId, setSelectedSubjectId] = React.useState<string | null>(null);
 
   const lastResult = mockExamResults[mockExamResults.length - 1];
   const averageScore = mockExamResults.length > 0 
@@ -91,14 +94,47 @@ export default function MockExam() {
                  </div>
               </div>
 
-              <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl shadow-lg h-12 font-bold gap-2" asChild>
-                 <NavLink to={ROUTE_PATHS.MOCK_EXAM_SESSION}>
-                    <Play className="h-4 w-4 fill-current" />
-                    Lancer le BAC Blanc
-                 </NavLink>
+              <Button 
+                 onClick={() => navigate(ROUTE_PATHS.MOCK_EXAM_SESSION, { state: { subjectId: selectedSubjectId } })}
+                 className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl shadow-lg h-12 font-bold gap-2"
+              >
+                 <Play className="h-4 w-4 fill-current" />
+                 Lancer le {selectedSubjectId ? "BAC Blanc ciblé" : "BAC Blanc complet"}
               </Button>
            </CardContent>
         </Card>
+      </motion.div>
+
+      {/* Subject Selector */}
+      <motion.div variants={itemVariants} className="space-y-3">
+         <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Choix de l'épreuve</h3>
+         
+         <div className="grid grid-cols-2 gap-3">
+            <button
+               onClick={() => setSelectedSubjectId(null)}
+               className={cn(
+                  "p-3 rounded-2xl border-2 text-left transition-all",
+                  selectedSubjectId === null ? "border-primary bg-primary/5 shadow-md" : "border-transparent bg-white shadow-sm hover:border-accent"
+               )}
+            >
+               <h4 className="font-bold text-sm">Général Complet</h4>
+               <p className="text-[10px] text-muted-foreground mt-1">Séquentiel</p>
+            </button>
+            
+            {subjects.map(sub => (
+               <button
+                  key={sub.id}
+                  onClick={() => setSelectedSubjectId(sub.id)}
+                  className={cn(
+                     "p-3 rounded-2xl border-2 text-left transition-all",
+                     selectedSubjectId === sub.id ? "border-primary bg-primary/5 shadow-md" : "border-transparent bg-white shadow-sm hover:border-accent"
+                  )}
+               >
+                  <h4 className="font-bold text-sm truncate">{sub.shortName}</h4>
+                  <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">{sub.name}</p>
+               </button>
+            ))}
+         </div>
       </motion.div>
 
       {/* Statistics Section */}

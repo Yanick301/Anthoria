@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Clock, 
@@ -12,7 +12,8 @@ import {
   Zap, 
   Target, 
   AlertCircle,
-  Award
+  Award,
+  Sparkles
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectsForTerminal } from '@/lib/index';
 import { EXERCISES } from '@/data/exercises';
@@ -23,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { AITutorModal } from '@/components/AITutorModal';
 
 const getExamConfig = (terminal: string | null) => {
   switch (terminal) {
@@ -35,6 +37,9 @@ const getExamConfig = (terminal: string | null) => {
 
 export default function MockExamSession() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectedSubjectId = location.state?.subjectId as string | undefined;
+
   const { addMockResult, updateStreak, terminal } = useAppStore();
   const config = getExamConfig(terminal);
 
@@ -45,6 +50,8 @@ export default function MockExamSession() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(config.duration);
   const [startTime] = useState(Date.now());
+  const [isAITutorOpen, setIsAITutorOpen] = useState(false);
+  const [activeAIQuestion, setActiveAIQuestion] = useState<Exercise | null>(null);
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
@@ -92,12 +99,27 @@ export default function MockExamSession() {
 
   // Initialisation
   useEffect(() => {
-    // Pool d'exercices mélangés toutes matières confondues
-    const pool = [...EXERCISES].sort(() => Math.random() - 0.5).slice(0, config.questions);
-    setQuestions(pool);
+    // Filtrage par matière si une a été sélectionnée
+    let pool = [...EXERCISES];
+    if (selectedSubjectId) {
+      pool = pool.filter(ex => ex.subjectId === selectedSubjectId);
+    }
+
+    // Mélange initial
+    pool = pool.sort(() => Math.random() - 0.5);
+    
+    // Sélection du nombre de questions
+    const finalSelection = pool.slice(0, config.questions);
+
+    // Si pas de matière spécifique (Général), on trie par matière pour que ça soit séquentiel (tour à tour)
+    if (!selectedSubjectId) {
+      finalSelection.sort((a, b) => a.subjectId.localeCompare(b.subjectId));
+    }
+
+    setQuestions(finalSelection);
     setTimeLeft(config.duration); // Reset time when config changes
     updateStreak();
-  }, [config.duration, config.questions, updateStreak]);
+  }, [config.duration, config.questions, updateStreak, selectedSubjectId]);
 
   // Minuterie
   useEffect(() => {
@@ -198,11 +220,22 @@ export default function MockExamSession() {
                     <div className="flex-1 min-w-0">
                       <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-0.5">{s?.name || 'Matière Inconnue'}</p>
                       <p className="text-sm font-bold text-foreground leading-tight line-clamp-2">{q.question}</p>
-                      <div className="mt-2 flex items-center gap-2">
-                         <span className="text-[10px] font-bold text-emerald-500">✓ {q.correctAnswer}</span>
-                      </div>
-                    </div>
-                  </motion.div>
+                       <div className="mt-2 flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-bold text-emerald-500">✓ {q.correctAnswer}</span>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => {
+                              setActiveAIQuestion(q);
+                              setIsAITutorOpen(true);
+                            }}
+                            className="h-7 px-2 rounded-lg text-[9px] font-black text-primary bg-primary/5 hover:bg-primary/10 border-none gap-1"
+                          >
+                            <Sparkles className="w-2.5 h-2.5 fill-current" /> IA
+                          </Button>
+                       </div>
+                     </div>
+                   </motion.div>
                 );
               })}
             </div>
@@ -264,8 +297,16 @@ export default function MockExamSession() {
               {currentIndex + 1} <span className="text-[10px] opacity-50">/ {questions.length}</span>
            </div>
         </div>
-      </div>
 
+        {activeAIQuestion && (
+          <AITutorModal 
+            isOpen={isAITutorOpen}
+            onClose={() => setIsAITutorOpen(false)}
+            question={activeAIQuestion.question}
+            explanation={activeAIQuestion.explanation}
+          />
+        )}
+      </div>
       <div className="h-1.5 w-full bg-accent/10">
         <motion.div 
           initial={{ width: 0 }}

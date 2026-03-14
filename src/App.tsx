@@ -19,6 +19,8 @@ import Planner from '@/pages/Planner';
 import ProgressPage from '@/pages/Progress';
 import GuidedPath from '@/pages/GuidedPath';
 import Settings from '@/pages/Settings';
+import ChallengeMatch from '@/pages/ChallengeMatch';
+import Flashcards from '@/pages/Flashcards';
 
 export default function App() {
   const { updateStreak, onboardingDone } = useAppStore();
@@ -48,13 +50,14 @@ export default function App() {
           <Route path={ROUTE_PATHS.GUIDED_PATH} element={<GuidedPath />} />
           <Route path={ROUTE_PATHS.PROGRESS} element={<ProgressPage />} />
           <Route path={ROUTE_PATHS.SETTINGS} element={<Settings />} />
+          <Route path={ROUTE_PATHS.CHALLENGE_MATCH} element={<ChallengeMatch />} />
           
           {/* Specific learning pages */}
           <Route path={ROUTE_PATHS.LESSON} element={<Lesson />} />
           <Route path={ROUTE_PATHS.QUIZ} element={<Quiz />} />
+          <Route path={ROUTE_PATHS.FLASHCARDS} element={<Flashcards />} />
           
           {/* Placeholders for secondary features */}
-          <Route path={ROUTE_PATHS.FLASHCARDS} element={<div className="p-8 text-center bg-accent/10 min-h-screen">Fonctionnalité Flashcards à venir.</div>} />
           <Route path={ROUTE_PATHS.ACHIEVEMENTS} element={<div className="p-8 text-center bg-accent/10 min-h-screen">Fonctionnalité Badges à venir.</div>} />
         </Route>
         

@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LockedPremiumContent } from '@/components/LockedPremiumContent';
 
 export default function Subjects() {
   const { progress, terminal } = useAppStore();
@@ -76,6 +77,15 @@ export default function Subjects() {
             <TabsTrigger value="completed" className="rounded-lg text-[10px] font-bold">Fini</TabsTrigger>
           </TabsList>
         </Tabs>
+      </motion.div>
+
+      {/* Gamified Referral Mechanic */}
+      <motion.div variants={itemVariants}>
+        <LockedPremiumContent 
+          title={`Pack d'Entraînement Intensif (${terminal || 'EA'})`}
+          description="Débloque des sujets types BAC exclusifs et rigoureux pour parfaire ta préparation finale."
+          requiredInvites={3}
+        />
       </motion.div>
 
       {/* Subjects List */}

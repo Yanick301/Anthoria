@@ -21,6 +21,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Moyen',
     question: "Si une zone reçoit 1200 mm de pluie par an et que l'évapotranspiration réelle (ETR) est de 800 mm, quel est l'écoulement annuel théorique (en mm) ?",
+    choices: ["200", "400", "600", "800"],
     correctAnswer: "400",
     explanation: "Selon le bilan hydrologique simplifié : P = ETR + Q. Donc Q = P - ETR = 1200 - 800 = 400 mm.",
     points: 10
@@ -42,6 +43,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Moyen',
     question: "Calculez le débit Q (en m³/s) d'un forage traversant une section de 0,5 m² avec une conductivité k=10⁻³ m/s et un gradient i=0,1 (Loi de Darcy).",
+    choices: ["0.00005", "0.0005", "0.005", "0.05"],
     correctAnswer: "0.00005",
     explanation: "Q = k * i * A = 10⁻³ * 0,1 * 0,5 = 0,00005 m³/s.",
     points: 10
@@ -79,6 +81,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Moyen',
     question: "Pour traiter 100 m³ d'eau avec une dose de chlore de 2 mg/L, quelle masse de chlore actif (en grammes) est nécessaire ?",
+    choices: ["20", "100", "200", "400"],
     correctAnswer: "200",
     explanation: "Masse = Dose * Volume = 2 mg/L * 100,000 L = 200,000 mg = 200 g.",
     points: 10
@@ -126,6 +129,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Difficile',
     question: "Calculez le volume utile (en litres) d'une fosse septique pour une famille de 8 personnes (Règle : 300L + 150L par personne).",
+    choices: ["1200", "1350", "1500", "1800"],
     correctAnswer: "1500",
     explanation: "Volume = 300 + (8 * 150) = 300 + 1200 = 1500 Litres.",
     points: 15
@@ -155,6 +159,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Facile',
     question: "Quelle est la pression hydrostatique (en Pa) au fond d'un réservoir de 10m de hauteur rempli d'eau ? (g=9,81 m/s²)",
+    choices: ["9810", "49050", "98100", "981000"],
     correctAnswer: "98100",
     explanation: "P = rho * g * h = 1000 * 9,81 * 10 = 98 100 Pa.",
     points: 5
@@ -169,6 +174,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Moyen',
     question: "Résolvez l'équation de croissance de population : P = 5000 * (1,02)^10. Quelle est la population après 10 ans ?",
+    choices: ["5095", "6000", "6095", "6195"],
     correctAnswer: "6095",
     explanation: "P = 5000 * 1,21899 = 6094,99 ≈ 6095.",
     points: 10
@@ -846,6 +852,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Difficile',
     question: "Quel est le module du nombre complexe z = 1 + i ?",
+    choices: ["1", "2", "√2", "2√2"],
     correctAnswer: "√2",
     explanation: "|z| = √(1² + 1²) = √2.",
     points: 15
@@ -856,6 +863,7 @@ export const EXERCISES: Exercise[] = [
     type: 'Calcul',
     difficulty: 'Moyen',
     question: "Quelle est la dérivée de la fonction f(x) = ln(x) ?",
+    choices: ["1/x", "x", "e^x", "-1/x"],
     correctAnswer: "1/x",
     explanation: "La fonction logarithme népérien a pour dérivée 1/x sur ]0, +∞[.",
     points: 10
@@ -871,16 +879,116 @@ export const EXERCISES: Exercise[] = [
     explanation: "Hambre signifie la faim. Sed (soif), frío (froid), sueño (sommeil).",
     points: 5
   },
+  
+  // ==========================================
+  // ANNALES BAC BÉNIN - MATHS (Série C/D/EA)
+  // ==========================================
   {
-    id: 'ec-001',
-    subjectId: 'education-civique',
+    id: 'math-bac-001',
+    subjectId: 'mathematiques',
+    type: 'Calcul',
+    difficulty: 'Difficile',
+    question: "Soit f(x) = x³ - 3x + 2. Quelles sont les abscisses des points d'inflexion de la courbe Cf ?",
+    choices: ["-1", "0", "1", "Il n'y en a pas"],
+    correctAnswer: "0",
+    explanation: "La dérivée seconde f''(x) = 6x s'annule en changeant de signe pour x=0. C'est le point d'inflexion.",
+    points: 20
+  },
+  {
+    id: 'math-bac-002',
+    subjectId: 'mathematiques',
+    type: 'QCM',
+    difficulty: 'Difficile',
+    question: "L'argument principal du nombre complexe z = -1 - i√3 est :",
+    choices: ["π/3", "2π/3", "-2π/3", "-π/3"],
+    correctAnswer: "-2π/3",
+    explanation: "|z|=2, cosθ=-1/2, sinθ=-√3/2. Donc θ = -2π/3 [2π].",
+    points: 20
+  },
+  {
+    id: 'math-bac-003',
+    subjectId: 'mathematiques',
+    type: 'Calcul',
+    difficulty: 'Moyen',
+    question: "Calculez l'intégrale I = ∫(de 0 à 1) e^x dx.",
+    choices: ["e", "e - 1", "e + 1", "1"],
+    correctAnswer: "e - 1",
+    explanation: "Une primitive de e^x est e^x. I = [e^x] de 0 à 1 = e¹ - e⁰ = e - 1.",
+    points: 15
+  },
+
+  // ==========================================
+  // ANNALES BAC BÉNIN - SCIENCES PHYSIQUES
+  // ==========================================
+  {
+    id: 'sp-bac-001',
+    subjectId: 'sciences-physiques',
+    type: 'Calcul',
+    difficulty: 'Difficile',
+    question: "Un mobile de masse m=2kg est soumis à une force F=10N. Quelle est son accélération 'a' (en m/s²) ?",
+    choices: ["2", "5", "10", "20"],
+    correctAnswer: "5",
+    explanation: "D'après la deuxième loi de Newton (RFD) : F = m * a. Donc a = F / m = 10 / 2 = 5 m/s².",
+    points: 20
+  },
+  {
+    id: 'sp-bac-002',
+    subjectId: 'sciences-physiques',
     type: 'QCM',
     difficulty: 'Moyen',
-    question: "Quelle est la date d'adoption de la Constitution actuelle du Bénin ?",
-    choices: ["1er Août 1960", "26 Octobre 1972", "11 Décembre 1990", "6 Avril 2006"],
-    correctAnswer: "11 Décembre 1990",
-    explanation: "La constitution de la 4ème République a été adoptée par référendum le 11 décembre 1990.",
-    points: 10
+    question: "Quelle est la base conjuguée de l'acide éthanoïque CH3COOH ?",
+    choices: ["CH3COO-", "CH3OH", "CH4", "CO2"],
+    correctAnswer: "CH3COO-",
+    explanation: "Un acide perd un proton H+ pour devenir sa base conjuguée : CH3COOH -> CH3COO- + H+.",
+    points: 15
+  },
+  {
+    id: 'sp-bac-003',
+    subjectId: 'sciences-physiques',
+    type: 'Calcul',
+    difficulty: 'Difficile',
+    question: "La demi-vie d'un isotope est de 10 jours. Au bout de combien de jours reste-t-il 1/4 de la population initiale ?",
+    choices: ["10 jours", "15 jours", "20 jours", "40 jours"],
+    correctAnswer: "20 jours",
+    explanation: "Au bout de t1/2, il reste 1/2. Au bout de 2 * t1/2, il reste 1/2 * 1/2 = 1/4. Soit 2 * 10 = 20 jours.",
+    points: 20
+  },
+
+  // ==========================================
+  // ANNALES BAC BÉNIN - SVT (BIOLOGIE)
+  // ==========================================
+  {
+    id: 'sv-bac-001',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Difficile',
+    question: "Lors de la méiose, le brassage interchromosomique a lieu pendant :",
+    choices: ["La Prophase I", "L'Anaphase I", "La Métaphase II", "L'Anaphase II"],
+    correctAnswer: "L'Anaphase I",
+    explanation: "Le brassage interchromosomique résulte de la séparation aléatoire des chromosomes homologues en Anaphase I.",
+    points: 20
+  },
+  {
+    id: 'sv-bac-002',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Quelle hormone provoque l'ovulation chez la femme ?",
+    choices: ["Oestrogène", "Progestérone", "FSH", "LH"],
+    correctAnswer: "LH",
+    explanation: "C'est le pic de l'hormone lutéinisante (LH) qui déclenche l'ovulation 24 à 36h plus tard.",
+    points: 15
+  },
+  {
+    id: 'sv-bac-003',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Un individu de groupe sanguin AB possède sur ses hématies :",
+    choices: ["Uniquement l'antigène A", "Uniquement l'antigène B", "Les antigènes A et B", "Aucun antigène"],
+    correctAnswer: "Les antigènes A et B",
+    explanation: "Le groupe AB est caractérisé par la co-dominance des allèles A et B, exprimant les deux types d'antigènes.",
+    points: 15
   }
 ];
 

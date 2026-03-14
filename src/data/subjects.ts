@@ -1954,7 +1954,7 @@ La réaction entre un acide fort et une base forte est totale. Les solutions tam
         title: 'Génétique et Hérédité',
         content: `La génétique étudie la transmission des caractères héréditaires et le fonctionnement des gènes.
 
-**L\'ADN et l\'Information Génétique**
+**L'ADN et l'Information Génétique**
 L'ADN est le support de l'hérédité. Sa structure en double hélice permet la duplication et la transmission de l'information. Un gène est un fragment d'ADN codant pour une protéine.
 
 **La Mutation**
@@ -2038,10 +2038,10 @@ Effets des drogues et de la fatigue sur la transmission synaptique.`,
 **Le Soi et le Non-Soi**
 Reconnaissance des marqueurs du CMH. Distinction entre les molécules appartenant à l'organisme et les molécules étrangères (antigènes).
 
-**L\'Immunité Innée**
+**L'Immunité Innée**
 Réaction inflammatoire (douleur, rougeur, chaleur, gonflement). Phagocytose par les macrophages.
 
-**L\'Immunité Adaptative**
+**L'Immunité Adaptative**
 Réponse humorale (lymphocytes B, anticorps) et réponse cellulaire (lymphocytes T cytotoxiques). Mémoire immunitaire.
 
 **Dysfonctionnements et Applications**

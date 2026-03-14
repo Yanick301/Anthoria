@@ -26,11 +26,22 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Cell
+} from 'recharts';
+import { calculateLevel, getXPProgress } from '@/lib/index';
 
 export default function ProgressPage() {
-  const { progress, points, streak, sessions, mockExamResults, terminal } = useAppStore();
+  const { progress, points, streak, sessions, mockExamResults, terminal, achievements } = useAppStore();
   const subjects = getSubjectsForTerminal(terminal);
-  const achievements = getAchievementsForTerminal(terminal);
+  const level = calculateLevel(points);
+  const xp = getXPProgress(points);
 
   const masteredSubjectsCount = Object.values(progress).filter(p => p.mastery >= 100).length;
   const totalExercisesCount = Object.values(progress).reduce((acc, curr) => acc + curr.completedExercises.length, 0);
@@ -40,12 +51,23 @@ export default function ProgressPage() {
     : null;
 
   const subjectStats = subjects.map((s) => ({
-    ...s,
+    name: s.shortName,
     mastery: progress[s.id]?.mastery ?? 0,
     completed: progress[s.id]?.completedExercises.length ?? 0,
+    full: 100,
+    id: s.id,
+    icon: s.icon,
+    gradient: s.gradient
   })).sort((a, b) => b.mastery - a.mastery);
+
   const strongSubjects = subjectStats.filter((s) => s.mastery >= 70).slice(0, 3);
-  const weakSubjects = subjectStats.filter((s) => s.mastery < 50 && s.mastery > 0).slice(0, 3);
+  const weakSubjects = subjectStats.filter((s) => s.mastery < 50).sort((a, b) => a.mastery - b.mastery).slice(0, 3);
+
+  // BAC Confidence Score Calculation
+  const completionRate = masteredSubjectsCount / subjects.length;
+  const examPerformance = avgBac ? avgBac / 20 : 0.4; // Default to 40% if no exams
+  const confidenceScore = Math.round((completionRate * 0.4 + examPerformance * 0.5 + (streak > 7 ? 0.1 : (streak / 70))) * 100);
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -63,7 +85,7 @@ export default function ProgressPage() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -71,46 +93,130 @@ export default function ProgressPage() {
     >
       {/* Overall Status Card */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-slate-900 to-slate-800 text-white border-none shadow-xl overflow-hidden relative">
-          <div className="absolute top-0 right-0 p-4 opacity-5">
-             <Trophy className="h-32 w-32" />
-          </div>
-          <CardContent className="p-6">
-            <div className="flex justify-between items-start mb-6">
-               <div>
-                  <h1 className="text-xl font-black italic tracking-tight uppercase">VOTRE PROGRESSION</h1>
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Objectif BAC {terminal || '2026'}</p>
-               </div>
-               <div className="bg-primary/20 p-2 rounded-xl border border-primary/30 flex items-center gap-2">
-                  <Star className="h-4 w-4 text-primary fill-primary" />
-                  <span className="font-bold text-sm">{points} XP</span>
-               </div>
+        <Card className="bg-slate-900 text-white border-none shadow-2xl overflow-hidden relative rounded-[40px]">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -mt-32" />
+          <CardContent className="p-8">
+            <div className="flex justify-between items-center mb-10">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-indigo-600 flex items-center justify-center text-2xl font-black shadow-lg">
+                  {level}
+                </div>
+                <div>
+                  <h1 className="text-xl font-black italic tracking-tight uppercase leading-none">Niveau de Maîtrise</h1>
+                  <p className="text-[10px] text-primary font-black uppercase tracking-widest mt-1">Série {terminal || 'EA'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-black text-white">{points}</div>
+                <div className="text-[10px] text-slate-500 font-bold uppercase">Points de Prestige</div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-               <div className="text-center">
-                  <div className="text-2xl font-bold">{masteredSubjectsCount} / {subjects.length}</div>
-                  <div className="text-[10px] text-slate-400 font-bold uppercase">Matières</div>
-               </div>
-               <div className="text-center">
-                  <div className="text-2xl font-bold">{totalExercisesCount}</div>
-                  <div className="text-[10px] text-slate-400 font-bold uppercase">Exercices</div>
-               </div>
-               <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">{streak} j</div>
-                  <div className="text-[10px] text-slate-400 font-bold uppercase">Série</div>
-               </div>
-            </div>
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-1">
+                  <div className="text-3xl font-black text-white">{confidenceScore}%</div>
+                  <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Chances de Succès au BAC</div>
+                </div>
+                <div className="space-y-1 text-right">
+                  <div className="text-3xl font-black text-orange-400">{streak}</div>
+                  <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Jours de Série 🔥</div>
+                </div>
+              </div>
 
-            <div className="space-y-2">
-               <div className="flex justify-between text-xs font-bold">
-                  <span>Avancement global</span>
-                  <span>{subjects.length ? Math.round((masteredSubjectsCount / subjects.length) * 100) : 0}%</span>
-               </div>
-               <Progress value={subjects.length ? (masteredSubjectsCount / subjects.length) * 100 : 0} className="h-2 bg-slate-700" />
+              <div className="space-y-2">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">
+                  <span>Prochain Niveau</span>
+                  <span>{xp.percent}%</span>
+                </div>
+                <div className="h-3 bg-slate-800 rounded-full overflow-hidden border border-slate-700/50 p-0.5">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${xp.percent}%` }}
+                    className="h-full bg-gradient-to-r from-primary to-indigo-400 rounded-full"
+                  />
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
+      </motion.div>
+
+      {/* Mastery Chart */}
+      <motion.div variants={itemVariants}>
+        <Card className="border-none shadow-sm rounded-3xl overflow-hidden">
+          <CardHeader className="pb-0">
+            <CardTitle className="text-sm font-black uppercase tracking-widest text-slate-400">Maîtrise du Programme</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4 px-2">
+            <div className="h-48 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={subjectStats} layout="vertical" margin={{ left: -10, right: 20 }}>
+                  <XAxis type="number" hide domain={[0, 100]} />
+                  <YAxis
+                    dataKey="name"
+                    type="category"
+                    axisLine={false}
+                    tickLine={false}
+                    fontSize={10}
+                    fontWeight="bold"
+                    width={80}
+                  />
+                  <Tooltip
+                    cursor={{ fill: 'transparent' }}
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="bg-slate-900 text-white p-2 rounded-lg text-[10px] font-bold shadow-xl">
+                            {payload[0].value}%
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="mastery" radius={[0, 4, 4, 0]} barSize={12}>
+                    {subjectStats.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#4F46E5' : '#818CF8'} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Focus Recommandations */}
+      <motion.div variants={itemVariants}>
+         <div className="grid grid-cols-2 gap-4">
+            {weakSubjects.length > 0 && (
+              <Card className="bg-orange-50 border-orange-100 p-4 rounded-3xl">
+                 <h4 className="text-[10px] font-black uppercase tracking-widest text-orange-600 mb-2">À Renforcer ⚠️</h4>
+                 <div className="space-y-2">
+                    {weakSubjects.slice(0, 2).map(s => (
+                      <div key={s.id} className="flex items-center gap-2">
+                         <span className="text-sm">{s.icon}</span>
+                         <span className="text-[11px] font-bold text-slate-700 truncate">{s.name}</span>
+                      </div>
+                    ))}
+                 </div>
+              </Card>
+            )}
+            {strongSubjects.length > 0 && (
+              <Card className="bg-emerald-50 border-emerald-100 p-4 rounded-3xl">
+                 <h4 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">Matières Fortes ✅</h4>
+                 <div className="space-y-2">
+                    {strongSubjects.slice(0, 2).map(s => (
+                      <div key={s.id} className="flex items-center gap-2">
+                         <span className="text-sm">{s.icon}</span>
+                         <span className="text-[11px] font-bold text-slate-700 truncate">{s.name}</span>
+                      </div>
+                    ))}
+                 </div>
+              </Card>
+            )}
+         </div>
       </motion.div>
 
       {/* Récap global par série */}

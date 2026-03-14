@@ -18,6 +18,7 @@ export const ROUTE_PATHS = {
   PROGRESS: '/progres',
   ACHIEVEMENTS: '/badges',
   SETTINGS: '/parametres',
+  CHALLENGE_MATCH: '/challenge/:payload',
 };
 
 // ============================
@@ -130,6 +131,8 @@ export interface AppState {
   lastStudyDate: string;
   completedExercises: Set<string>;
   mockExamResults: MockExamResult[];
+  invitesSent: number;
+  lastSeenVersion: string;
 }
 
 export interface MockExamResult {
@@ -191,6 +194,36 @@ export function formatDuration(minutes: number): string {
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
   return m > 0 ? `${h}h ${m}min` : `${h}h`;
+}
+
+// ============================
+// GAMIFICATION HELPERS
+// ============================
+
+export function calculateLevel(points: number): number {
+  // Level 1: 0-49 pts
+  // Level 2: 50-199 pts
+  // Formula: L = floor(sqrt(P/50)) + 1
+  return Math.floor(Math.sqrt(points / 50)) + 1;
+}
+
+export function getXPForLevel(level: number): number {
+  // Points required for level L
+  return Math.pow(level - 1, 2) * 50;
+}
+
+export function getXPProgress(points: number): { current: number, next: number, percent: number } {
+  const level = calculateLevel(points);
+  const currentLevelXP = getXPForLevel(level);
+  const nextLevelXP = getXPForLevel(level + 1);
+  const xpInLevel = points - currentLevelXP;
+  const totalNeededInLevel = nextLevelXP - currentLevelXP;
+  
+  return {
+    current: xpInLevel,
+    next: totalNeededInLevel,
+    percent: Math.round((xpInLevel / totalNeededInLevel) * 100)
+  };
 }
 
 export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: number = 0): DayPlan[] {

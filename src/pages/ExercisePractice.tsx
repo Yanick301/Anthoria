@@ -11,7 +11,8 @@ import {
   ArrowLeft, 
   RotateCcw, 
   Clock,
-  HelpCircle
+  HelpCircle,
+  Sparkles
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectsForTerminal } from '@/lib/index';
 import { EXERCISES } from '@/data/exercises';
@@ -22,6 +23,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ShareChallenge } from '@/components/ShareChallenge';
+import { AITutorModal } from '@/components/AITutorModal';
 
 const QUIZ_LENGTH = 10;
 
@@ -40,6 +43,7 @@ export default function ExercisePractice() {
   const [results, setResults] = useState<Array<{ correct: boolean; answer: string }>>([]);
   const [startTime] = useState(Date.now());
   const [questionTime, setQuestionTime] = useState(0);
+  const [isAITutorOpen, setIsAITutorOpen] = useState(false);
 
   useEffect(() => {
     // Filtrage des exercices par matière
@@ -204,8 +208,18 @@ export default function ExercisePractice() {
           </div>
         </div>
 
+        {/* Viral Share Component */}
+        <div className="px-6 mt-2">
+          <ShareChallenge 
+            score={correctCount} 
+            total={exercises.length} 
+            subjectName={subject?.name || 'la révision'} 
+            exerciseIds={exercises.map(ex => ex.id)}
+          />
+        </div>
+
         {/* Footer Actions */}
-        <div className="p-6 mt-4 space-y-3">
+        <div className="p-6 mt-2 space-y-3">
           <Button
             onClick={() => {
               setPhase('quiz');
@@ -343,11 +357,25 @@ export default function ExercisePractice() {
                     <p className="text-sm font-black text-rose-600 mb-2 italic">→ {current.correctAnswer}</p>
                   )}
                   <p className="text-xs text-muted-foreground leading-relaxed font-bold opacity-80">{current.explanation}</p>
+                  
+                  <Button
+                    onClick={() => setIsAITutorOpen(true)}
+                    className="mt-4 w-full h-10 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary border-none shadow-none font-black text-[10px] uppercase tracking-wider gap-2"
+                  >
+                    <Sparkles className="w-3 h-3 fill-current" /> ✨ Demander à l'IA d'expliquer
+                  </Button>
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
         </AnimatePresence>
+
+        <AITutorModal 
+          isOpen={isAITutorOpen}
+          onClose={() => setIsAITutorOpen(false)}
+          question={current.question}
+          explanation={current.explanation}
+        />
       </div>
 
       {/* Bottom control */}
