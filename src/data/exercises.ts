@@ -784,6 +784,103 @@ export const EXERCISES: Exercise[] = [
     correctAnswer: "Nucléotides",
     explanation: "L'ADN (Acide DésoxyriboNucléique) est un polymère de nucléotides.",
     points: 10
+  },
+  {
+    id: 'sv-002',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Quelle hormone déclenche l'ovulation chez la femme ?",
+    choices: ["La Progestérone", "La LH (Hormone Lutéinisante)", "L'Oestrogène", "La Testostérone"],
+    correctAnswer: "La LH (Hormone Lutéinisante)",
+    explanation: "Un pic de LH vers le 14ème jour du cycle déclenche l'expulsion de l'ovule.",
+    points: 10
+  },
+  {
+    id: 'sv-003',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Facile',
+    question: "Où se déroule la fécondation dans l'appareil reproducteur féminin ?",
+    choices: ["Dans l'utérus", "Dans le vagin", "Dans les trompes de Fallope", "Dans les ovaires"],
+    correctAnswer: "Dans les trompes de Fallope",
+    explanation: "La rencontre entre le spermatozoïde et l'ovule a lieu dans le tiers supérieur des trompes.",
+    points: 10
+  },
+  {
+    id: 'sv-004',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Difficile',
+    question: "Quel est le centre nerveux responsable des réflexes myotatiques ?",
+    choices: ["Le cerveau", "Le cervelet", "La moelle épinière", "Le tronc cérébral"],
+    correctAnswer: "La moelle épinière",
+    explanation: "Le réflexe myotatique est un réflexe involontaire dont le centre est la moelle épinière.",
+    points: 15
+  },
+  {
+    id: 'sv-005',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Comment appelle-t-on la zone de jonction entre deux neurones ?",
+    choices: ["Un axone", "Une dendrite", "Une synapse", "Un ganglion"],
+    correctAnswer: "Une synapse",
+    explanation: "La synapse est la zone de communication chimique ou électrique entre deux cellules nerveuses.",
+    points: 10
+  },
+  {
+    id: 'sv-006',
+    subjectId: 'biologie',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Quel type de lymphocytes est détruit par le virus du VIH (SIDA) ?",
+    choices: ["Lymphocytes B", "Lymphocytes T4", "Lymphocytes T8", "Macrophages"],
+    correctAnswer: "Lymphocytes T4",
+    explanation: "Le VIH cible les LT4, chefs d'orchestre de la réponse immunitaire, entraînant l'immunodéficience.",
+    points: 10
+  },
+  {
+    id: 'math-005',
+    subjectId: 'mathematiques',
+    type: 'Calcul',
+    difficulty: 'Difficile',
+    question: "Quel est le module du nombre complexe z = 1 + i ?",
+    correctAnswer: "√2",
+    explanation: "|z| = √(1² + 1²) = √2.",
+    points: 15
+  },
+  {
+    id: 'math-006',
+    subjectId: 'mathematiques',
+    type: 'Calcul',
+    difficulty: 'Moyen',
+    question: "Quelle est la dérivée de la fonction f(x) = ln(x) ?",
+    correctAnswer: "1/x",
+    explanation: "La fonction logarithme népérien a pour dérivée 1/x sur ]0, +∞[.",
+    points: 10
+  },
+  {
+    id: 'esp-001',
+    subjectId: 'espagnol',
+    type: 'QCM',
+    difficulty: 'Facile',
+    question: "Comment dit-on 'J'ai faim' en espagnol ?",
+    choices: ["Tengo sed", "Tengo frío", "Tengo hambre", "Tengo sueño"],
+    correctAnswer: "Tengo hambre",
+    explanation: "Hambre signifie la faim. Sed (soif), frío (froid), sueño (sommeil).",
+    points: 5
+  },
+  {
+    id: 'ec-001',
+    subjectId: 'education-civique',
+    type: 'QCM',
+    difficulty: 'Moyen',
+    question: "Quelle est la date d'adoption de la Constitution actuelle du Bénin ?",
+    choices: ["1er Août 1960", "26 Octobre 1972", "11 Décembre 1990", "6 Avril 2006"],
+    correctAnswer: "11 Décembre 1990",
+    explanation: "La constitution de la 4ème République a été adoptée par référendum le 11 décembre 1990.",
+    points: 10
   }
 ];
 

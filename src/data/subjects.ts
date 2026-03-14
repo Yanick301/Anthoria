@@ -686,6 +686,56 @@ Variation % = (nouvelle-ancienne)/ancienne × 100`,
         ]
       },
       {
+        id: 'math-complexes',
+        title: 'Nombres Complexes',
+        content: `Les nombres complexes sont une extension des nombres réels, indispensables en physique et en analyse.
+
+**Forme Algébrique**
+z = a + ib, avec i² = -1. a est la partie réelle, b la partie imaginaire.
+
+**Forme Trigonométrique et Exponentielle**
+z = r(cos θ + i sin θ) = re^(iθ). r est le module |z| = √(a² + b²), θ est l'argument.
+
+**Opérations**
+Addition, multiplication, conjugaison. Équations du second degré à coefficients réels.`,
+        examples: [
+          'Calcul du module de z = 3 + 4i → |z| = 5',
+          'Utilisation des complexes en électricité (impédances)',
+          'Résolution de z² + 1 = 0 → z = i ou z = -i'
+        ],
+        keyPoints: [
+          'i² = -1',
+          'Module : distance à l\'origine',
+          'Argument : angle avec l\'axe réel',
+          'Formule d\'Euler : e^(iθ) = cos θ + i sin θ'
+        ]
+      },
+      {
+        id: 'math-analyse',
+        title: 'Analyse : Limites et Intégrales',
+        content: `L'analyse étudie le comportement des fonctions.
+
+**Limites et Continuité**
+Étude aux bornes du domaine de définition. Théorème des valeurs intermédiaires.
+
+**Dérivation**
+Nombre dérivé, fonction dérivée, sens de variation et extrema.
+
+**Intégration**
+Primitive d'une fonction, calcul d'intégrales, aires sous la courbe.`,
+        examples: [
+          'Calcul de la limite de 1/x en +infini → 0',
+          'Primitive de x² → (1/3)x³',
+          'Étude de la fonction exponentielle e^x'
+        ],
+        keyPoints: [
+          'Dérivée de ln(x) = 1/x',
+          'Intégrale = Aire algébrique',
+          'Relation de Chasles : ∫f(x) dx de a à c = ∫ de a à b + ∫ de b à c',
+          'Asymptotes : verticales, horizontales ou obliques'
+        ]
+      },
+      {
         id: 'statistiques',
         title: 'Statistiques et Probabilités',
         content: `Les statistiques sont utilisées pour analyser les données de qualité d'eau, les débits fluviaux, les performances des stations de traitement.
@@ -1923,6 +1973,90 @@ Transmission des caractères dominants et récessifs. Chromosomes sexuels (X, Y)
           'Phénotype : Caractères observables',
           'Chromosomes : Supports de l\'ADN'
         ]
+      },
+      {
+        id: 'svt-reproduction',
+        title: 'Physiologie de la Reproduction',
+        content: `La reproduction humaine assure la continuité de l'espèce à travers des mécanismes hormonaux complexes.
+
+**Appareils Reproducteurs**
+Anatomie et rôles des testicules (spermatogenèse, testostérone) et des ovaires (ovogenèse, œstrogènes, progestérone).
+
+**Cycles Sexuels chez la Femme**
+Cycle ovarien (Phase folliculaire, ovulation, phase lutéale) et cycle utérin (menstruations, phase proliférative, phase sécrétoire). Régulation par le complexe hypothalamo-hypophysaire (GnRH, LH, FSH).
+
+**De la Fécondation à la Naissance**
+Rencontre des gamètes dans les trompes, nidation dans l'utérus, développement embryonnaire et foetal. Rôle du placenta.
+
+**Maîtrise de la Procréation**
+Contraception (pilules, préservatifs, stérilets) et Procréation Médicalement Assistée (PMA).`,
+        examples: [
+          'Le pic de LH déclenchant l\'ovulation au 14ème jour',
+          'L\'action de la testostérone sur les caractères sexuels secondaires',
+          'Le rôle de l\'HCG dans le maintien du corps jaune'
+        ],
+        keyPoints: [
+          'Gamétogenèse : Formation des gamètes',
+          'Rétrocontrôle : Régulation hormonale',
+          'Nidation : Fixation de l\'embryon',
+          'Placenta : Zone d\'échanges'
+        ]
+      },
+      {
+        id: 'svt-nerveux',
+        title: 'Le Système Nerveux',
+        content: `La communication nerveuse permet la coordination des fonctions de l'organisme et la relation avec l'environnement.
+
+**Le Message Nerveux**
+Nature électrique (potentiel de repos, potentiel d'action) et transmission chimique au niveau des synapses (neurotransmetteurs).
+
+**Le Réflexe Myotatique**
+Un exemple d'activité nerveuse involontaire. Arc réflexe : récepteur, nerf sensitif, centre nerveux (moelle épinière), nerf moteur, effecteur (muscle).
+
+**Cerveau et Motricité**
+Aires motrices cérébrales et commande du mouvement volontaire. Plasticité cérébrale.
+
+**Perturbations du Système Nerveux**
+Effets des drogues et de la fatigue sur la transmission synaptique.`,
+        examples: [
+          'Le réflexe rotulien (coup sur le genou)',
+          'L\'action de la dopamine dans le circuit de la récompense',
+          'La transmission synaptique via l\'acétylcholine'
+        ],
+        keyPoints: [
+          'Neurone : Unité fonctionnelle',
+          'Synapse : Zone de contact',
+          'Potentiel d\'action : Signal nerveux',
+          'Moelle épinière : Centre des réflexes'
+        ]
+      },
+      {
+        id: 'svt-immunologie',
+        title: 'Immunologie et Défense',
+        content: `Le système immunitaire protège l'organisme contre les agressions extérieures (microbes) et intérieures (cellules cancéreuses).
+
+**Le Soi et le Non-Soi**
+Reconnaissance des marqueurs du CMH. Distinction entre les molécules appartenant à l'organisme et les molécules étrangères (antigènes).
+
+**L\'Immunité Innée**
+Réaction inflammatoire (douleur, rougeur, chaleur, gonflement). Phagocytose par les macrophages.
+
+**L\'Immunité Adaptative**
+Réponse humorale (lymphocytes B, anticorps) et réponse cellulaire (lymphocytes T cytotoxiques). Mémoire immunitaire.
+
+**Dysfonctionnements et Applications**
+Le SIDA (VIH), les allergies, les vaccins et les sérums.`,
+        examples: [
+          'La production d\'anticorps après une vaccination',
+          'La réaction inflammatoire après une coupure',
+          'Le rôle des LT4 (chefs d\'orchestre de l\'immunité)'
+        ],
+        keyPoints: [
+          'Antigène : Molécule étrangère',
+          'Anticorps : Protéine de défense',
+          'Vaccination : Prévention',
+          'Sérothérapie : Traitement curatif'
+        ]
       }
     ]
   },
@@ -2219,6 +2353,84 @@ Les agents économiques sont les acteurs qui participent à l'activité économi
           'Réponse au chômage des jeunes',
           'Formalisation nécessaire',
           'Innovation locale'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'espagnol',
+    name: 'Espagnol',
+    shortName: 'Espagnol',
+    icon: '🇪🇸',
+    color: '#F97316',
+    gradient: 'from-orange-600 to-orange-400',
+    description: 'Grammaire, vocabulaire et culture du monde hispanique.',
+    totalExercises: 30,
+    chapters: [
+      {
+        id: 'esp-grammaire',
+        title: 'Grammaire et Conjugaison',
+        content: `**I. LES TEMPS DU RÉEL**
+- **Présent de l'indicatif** : Verbes réguliers (-ar, -er, -ir) et irrégularités courantes (diphtongue, affaiblissement).
+- **Passé composé** : Auxiliaire 'haber' + participe passé.
+
+**II. LES TEMPS DU PASSÉ**
+- **Prétérit (Indefinido)** : Action ponctuelle et terminée.
+- **Imparfait** : Description et habitude dans le passé.
+
+**III. L'OBLIGATION**
+- **Haber de + infinitif**
+- **Tener que + infinitif**`,
+        examples: [
+          'Présent : Yo hablo, tú comes, él vive.',
+          'Obligation : Tengo que estudiar para el BAC.',
+          'Indefinido : Ayer fuí al mercado.'
+        ],
+        keyPoints: [
+          'L\'accentuation est primordiale en espagnol.',
+          'Distinguer SER et ESTAR.',
+          'Utiliser correctement le subjonctif après "cuando" futur.',
+          'Connaître les irréguliers au prétérit.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'education-civique',
+    name: 'Éducation Civique',
+    shortName: 'Éduc. Civ.',
+    icon: '⚖️',
+    color: '#DB2777',
+    gradient: 'from-pink-700 to-pink-500',
+    description: 'Citoyenneté, institutions de la République du Bénin et droits de l\'homme.',
+    totalExercises: 20,
+    chapters: [
+      {
+        id: 'ec-institutions-benin',
+        title: 'Les Institutions de la République',
+        content: `**I. LA CONSTITUTION DU BÉNIN**
+L'acte fondamental qui régit l'État béninois, adopté le 11 décembre 1990.
+
+**II. LES GRANDES INSTITUTIONS**
+1. **Le Président de la République** : Chef de l'État, chef du gouvernement.
+2. **L'Assemblée Nationale** : Pouvoir législatif (voter les lois, contrôler l'action du gouvernement).
+3. **La Cour Constitutionnelle** : Juge de la constitutionnalité des lois, gardienne des droits fondamentaux.
+4. **La Cour Suprême** : Plus haute juridiction en matière administrative et judiciaire.
+5. **La Haute Cour de Justice** : Juge le Président et les membres du gouvernement pour haute trahison.
+
+**III. LES DROITS ET DEVOIRS DU CITOYEN**
+- Droit au vote, droit à l'éducation, liberté d'expression.
+- Devoir de respecter les lois, de payer les impôts, de défendre la patrie.`,
+        examples: [
+          'Le Palais de la Marina (Présidence)',
+          'Le Palais des Gouverneurs à Porto-Novo (Assemblée)',
+          'Le drapeau : Vert-Jaune-Rouge'
+        ],
+        keyPoints: [
+          'Séparation des pouvoirs : Exécutif, Législatif, Judiciaire.',
+          'Le Bénin est une démocratie multipartite.',
+          'Le respect des emblèmes nationaux est un devoir.',
+          'La laïcité de l\'État.'
         ]
       }
     ]

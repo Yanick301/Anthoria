@@ -160,7 +160,14 @@ export function getSubjectColor(subjectId: string): string {
     'sciences-physiques': 'bg-purple-500',
     'mathematiques': 'bg-orange-500',
     'francais': 'bg-rose-500',
-    'anglais': 'bg-green-500',
+    'anglais': 'bg-emerald-500',
+    'philosophie': 'bg-violet-500',
+    'histoire': 'bg-red-500',
+    'geographie': 'bg-green-500',
+    'biologie': 'bg-pink-500',
+    'economie': 'bg-sky-500',
+    'espagnol': 'bg-orange-600',
+    'education-civique': 'bg-fuchsia-500',
   };
   return colors[subjectId] || 'bg-blue-500';
 }
