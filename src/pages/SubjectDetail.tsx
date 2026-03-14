@@ -15,7 +15,11 @@ import {
   Info,
   Layers,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  Zap as ZapIcon,
+  Sparkles,
+  MessageSquareText,
+  Target
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectColor, getSubjectsForTerminal } from '@/lib/index';
 import { useAppStore } from '@/hooks/useAppStore';
@@ -24,12 +28,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { AITutorModal } from '@/components/AITutorModal';
+import { cn } from '@/lib/utils';
 
 export default function SubjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { progress, terminal } = useAppStore();
-  
+  const [isAiSummaryOpen, setIsAiSummaryOpen] = React.useState(false);
+
   const subject = getSubjectsForTerminal(terminal).find((s) => s.id === id);
   if (!subject) return <div className="p-8 text-center">Matière non trouvée.</div>;
 
@@ -52,21 +59,21 @@ export default function SubjectDetail() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       className="flex flex-col min-h-screen bg-accent/10"
     >
       {/* Header Banner */}
-      <motion.div 
-        variants={itemVariants} 
+      <motion.div
+        variants={itemVariants}
         className={`h-48 relative overflow-hidden bg-gradient-to-br ${subject.gradient} text-white p-6 flex flex-col justify-end`}
       >
         <div className="absolute top-4 left-4 z-20">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="text-white hover:bg-white/10 rounded-full"
             onClick={() => navigate(ROUTE_PATHS.SUBJECTS)}
           >
@@ -105,12 +112,12 @@ export default function SubjectDetail() {
 
           <TabsContent value="lessons" className="mt-6 space-y-4">
             <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <FileText className="h-5 w-5 text-primary" /> 
+              <FileText className="h-5 w-5 text-primary" />
               Chapitres du programme
             </h2>
             {subject.chapters.map((chapter, index) => (
-              <NavLink 
-                key={chapter.id} 
+              <NavLink
+                key={chapter.id}
                 to={ROUTE_PATHS.LESSON.replace(':id', subject.id)}
                 className="block group"
               >
@@ -193,7 +200,7 @@ export default function SubjectDetail() {
                 <Card className="p-4 flex items-center justify-between hover:bg-accent/10 transition-colors border-none shadow-sm bg-white mb-3">
                    <div className="flex gap-3 items-center">
                       <div className="h-10 w-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
-                         <Zap className="h-6 w-6" />
+                         <ZapIcon className="h-6 w-6" />
                       </div>
                       <div>
                          <h4 className="font-bold text-sm">Flashcards Mémoire</h4>
@@ -202,7 +209,23 @@ export default function SubjectDetail() {
                    </div>
                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
                 </Card>
-             </NavLink>
+              </NavLink>
+
+              <Card
+                onClick={() => setIsAiSummaryOpen(true)}
+                className="p-4 flex items-center justify-between hover:bg-accent/10 transition-colors border-none shadow-sm bg-white mb-3 cursor-pointer group"
+              >
+                 <div className="flex gap-3 items-center">
+                    <div className="h-10 w-10 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                       <Sparkles className="h-6 w-6" />
+                    </div>
+                    <div>
+                       <h4 className="font-bold text-sm">Résumé IA Express</h4>
+                       <p className="text-[10px] text-muted-foreground">L'essentiel à retenir pour l'examen</p>
+                    </div>
+                 </div>
+                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
+              </Card>
 
              <NavLink to={ROUTE_PATHS.QUIZ.replace(':id', subject.id)}>
                 <Card className="p-4 flex items-center justify-between hover:bg-accent/10 transition-colors border-none shadow-sm bg-white mb-3">
@@ -253,6 +276,13 @@ export default function SubjectDetail() {
           </NavLink>
         </Button>
       </div>
+
+      <AITutorModal
+        isOpen={isAiSummaryOpen}
+        onClose={() => setIsAiSummaryOpen(false)}
+        question={`Résumé Global : ${subject.name}`}
+        explanation={`L'essentiel pour ton BAC ${terminal} en ${subject.name} : Concentre-toi sur la maîtrise des ${subject.chapters.length} chapitres clés. La stratégie gagnante ici est de lier les définitions théoriques aux calculs pratiques. Assure-toi de connaître par cœur les schémas de principe vus en cours.`}
+      />
     </motion.div>
   );
 }

@@ -12,7 +12,8 @@ import {
   RotateCcw, 
   Clock,
   HelpCircle,
-  Sparkles
+  Sparkles,
+  Bot
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectsForTerminal } from '@/lib/index';
 import { EXERCISES } from '@/data/exercises';
@@ -357,13 +358,15 @@ export default function ExercisePractice() {
                     <p className="text-sm font-black text-rose-600 mb-2 italic">→ {current.correctAnswer}</p>
                   )}
                   <p className="text-xs text-muted-foreground leading-relaxed font-bold opacity-80">{current.explanation}</p>
-                  
-                  <Button
-                    onClick={() => setIsAITutorOpen(true)}
-                    className="mt-4 w-full h-10 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary border-none shadow-none font-black text-[10px] uppercase tracking-wider gap-2"
-                  >
-                    <Sparkles className="w-3 h-3 fill-current" /> ✨ Demander à l'IA d'expliquer
-                  </Button>
+                                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-xl border-primary/20 bg-primary/5 text-primary font-bold flex items-center gap-2 hover:bg-primary/10"
+                      onClick={() => setIsAITutorOpen(true)}
+                    >
+                      <Bot className="w-4 h-4" />
+                      Demander au Professeur
+                    </Button>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -371,11 +374,14 @@ export default function ExercisePractice() {
         </AnimatePresence>
 
         <AITutorModal 
-          isOpen={isAITutorOpen}
-          onClose={() => setIsAITutorOpen(false)}
-          question={current.question}
-          explanation={current.explanation}
-        />
+         isOpen={isAITutorOpen} 
+         onClose={() => setIsAITutorOpen(false)} 
+         question={current?.question || ''}
+         explanation={current?.explanation || ''}
+         methodology={current?.methodology}
+         deepDive={current?.deepDive}
+         isCorrect={selected !== null ? selected === current?.correctAnswer : null}
+       />
       </div>
 
       {/* Bottom control */}

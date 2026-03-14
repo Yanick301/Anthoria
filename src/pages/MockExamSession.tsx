@@ -13,7 +13,8 @@ import {
   Target, 
   AlertCircle,
   Award,
-  Sparkles
+  Sparkles,
+  Bot
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectsForTerminal } from '@/lib/index';
 import { EXERCISES } from '@/data/exercises';
@@ -231,7 +232,7 @@ export default function MockExamSession() {
                             }}
                             className="h-7 px-2 rounded-lg text-[9px] font-black text-primary bg-primary/5 hover:bg-primary/10 border-none gap-1"
                           >
-                            <Sparkles className="w-2.5 h-2.5 fill-current" /> IA
+                             <Bot className="w-2.5 h-2.5" /> Professeur
                           </Button>
                        </div>
                      </div>
@@ -304,6 +305,9 @@ export default function MockExamSession() {
             onClose={() => setIsAITutorOpen(false)}
             question={activeAIQuestion.question}
             explanation={activeAIQuestion.explanation}
+            methodology={activeAIQuestion.methodology}
+            deepDive={activeAIQuestion.deepDive}
+            isCorrect={answers[activeAIQuestion.id] === activeAIQuestion.correctAnswer}
           />
         )}
       </div>

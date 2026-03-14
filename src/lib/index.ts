@@ -70,6 +70,8 @@ export interface Exercise {
   choices?: string[];
   correctAnswer: string;
   explanation: string;
+  methodology?: string; // Deep dive method
+  deepDive?: string;    // Theoretical background
   points: number;
 }
 

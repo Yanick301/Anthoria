@@ -12,7 +12,9 @@ export const EXERCISES: Exercise[] = [
     question: "Quel est le moteur principal du cycle de l'eau sur Terre ?",
     choices: ["Le vent", "L'énergie solaire", "La force de Coriolis", "L'attraction lunaire"],
     correctAnswer: "L'énergie solaire",
-    explanation: "C'est l'énergie solaire qui provoque l'évaporation des océans et des surfaces continentales.",
+    explanation: "C'est l'énergie solaire qui est le moteur ultime du cycle de l'eau. Par rayonnement, elle provoque l'évaporation de l'eau des océans et des continents.",
+    methodology: "Pour identifier le moteur principal d'un cycle physique, cherche toujours la source d'énergie externe qui initie le changement d'état de la matière (ici, le passage du liquide au gazeux).",
+    deepDive: "Le cycle de l'eau (hydrosphère) est un système fermé en masse mais ouvert en énergie. Environ 23% de l'énergie solaire arrivant sur Terre est utilisée pour l'évaporation, ce qui classifie le Soleil comme le chef d'orchestre du climat et de l'hydrologie mondiale.",
     points: 5
   },
   {
@@ -23,7 +25,9 @@ export const EXERCISES: Exercise[] = [
     question: "Si une zone reçoit 1200 mm de pluie par an et que l'évapotranspiration réelle (ETR) est de 800 mm, quel est l'écoulement annuel théorique (en mm) ?",
     choices: ["200", "400", "600", "800"],
     correctAnswer: "400",
-    explanation: "Selon le bilan hydrologique simplifié : P = ETR + Q. Donc Q = P - ETR = 1200 - 800 = 400 mm.",
+    explanation: "Le calcul s'appuie sur l'équation fondamentale du bilan hydrologique : Pécipitations (P) = Évapotranspiration (ETR) + Écoulement (Q).",
+    methodology: "Étape 1 : Identifie les variables (P=1200, ETR=800). Étape 2 : Isole l'inconnue Q = P - ETR. Étape 3 : Applique numériquement 1200 - 800 = 400. Toujours vérifier que les unités (mm) sont homogènes.",
+    deepDive: "L'évapotranspiration réelle (ETR) représente la somme de l'évaporation du sol et de la transpiration des plantes. L'écoulement (Q) est la part 'utile' pour l'homme, car c'est elle qui recharge nos cours d'eau. Ce bilan est crucial pour la gestion durable des barrages au Bénin.",
     points: 10
   },
   {
@@ -34,7 +38,9 @@ export const EXERCISES: Exercise[] = [
     question: "Comment appelle-t-on une nappe dont la surface est en contact direct avec l'atmosphère ?",
     choices: ["Nappe captive", "Nappe artésienne", "Nappe phréatique (ou libre)", "Nappe fossile"],
     correctAnswer: "Nappe phréatique (ou libre)",
-    explanation: "Une nappe libre a une surface piézométrique qui coïncide avec la surface libre de l'eau.",
+    explanation: "Une nappe est dite 'libre' ou 'phréatique' lorsque sa limite supérieure est en contact direct avec la pression atmosphérique.",
+    methodology: "Retiens le mot 'Phréatique' vient du grec 'phrear' qui signifie 'puits'. C'est la nappe que l'on atteint en creusant simplement un puits traditionnel.",
+    deepDive: "La surface d'une nappe libre s'appelle la 'surface piézométrique'. Dans une nappe libre, cette surface correspond au niveau réel de l'eau dans le terrain. Si on pollue le sol au-dessus d'une nappe phréatique, la pollution s'infiltre directement, d'où l'importance de protéger ces zones.",
     points: 5
   },
   {

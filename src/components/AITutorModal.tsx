@@ -8,161 +8,217 @@ import {
   Loader2, 
   GraduationCap, 
   Lightbulb,
-  MessageSquareText
+  MessageSquareText,
+  Target,
+  CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { useAppStore } from '@/hooks/useAppStore';
 
 interface AITutorModalProps {
   isOpen: boolean;
   onClose: () => void;
   question: string;
   explanation: string;
+  methodology?: string;
+  deepDive?: string;
+  isCorrect?: boolean | null;
 }
 
-export function AITutorModal({ isOpen, onClose, question, explanation }: AITutorModalProps) {
+export function AITutorModal({ isOpen, onClose, question, explanation, methodology, deepDive, isCorrect }: AITutorModalProps) {
   const [loading, setLoading] = useState(true);
-  const [displayText, setDisplayText] = useState('');
-  const [fullText, setFullText] = useState('');
+  const { terminal } = useAppStore();
 
   useEffect(() => {
     if (isOpen) {
       setLoading(true);
-      setDisplayText('');
-      
-      // Simuler une "réflexion" de l'IA
-      const timer = setTimeout(() => {
-        setLoading(false);
-        const aiResponse = generateAIExplanation(question, explanation);
-        setFullText(aiResponse);
-      }, 1500);
-
+      const timer = setTimeout(() => setLoading(false), 1200);
       return () => clearTimeout(timer);
     }
   }, [isOpen, question, explanation]);
 
-  // Typing effect
-  useEffect(() => {
-    if (!loading && fullText) {
-      let i = 0;
-      const interval = setInterval(() => {
-        setDisplayText(fullText.substring(0, i));
-        i += 3; // Type faster
-        if (i > fullText.length) clearInterval(interval);
-      }, 20);
-      return () => clearInterval(interval);
+  if (!isOpen) return null;
+
+  // Determine subject-specific context
+  const isScience = question.toLowerCase().includes('calcul') || question.toLowerCase().includes('formule');
+  
+  const sections = [
+    {
+      title: "📖 L'Explication du Professeur",
+      content: explanation,
+      color: "from-blue-500/5 to-indigo-500/5 border-blue-100",
+      iconColor: "bg-blue-500"
+    },
+    ...(methodology ? [{
+      title: "🛠️ Méthode de Résolution",
+      content: methodology,
+      color: "from-emerald-500/5 to-teal-500/5 border-emerald-100",
+      iconColor: "bg-emerald-500"
+    }] : []),
+    ...(deepDive ? [{
+      title: "🧠 Zoom sur le Concept",
+      content: deepDive,
+      color: "from-purple-500/5 to-fuchsia-500/5 border-purple-100",
+      iconColor: "bg-purple-500"
+    }] : []),
+    {
+      title: "🎯 Point Clé pour le BAC",
+      content: isScience 
+        ? "La rigueur dans les étapes du calcul est primordiale. Un résultat sans unité ou sans justification est souvent lourdement sanctionné."
+        : "La clarté de la rédaction et l'utilisation des termes techniques précis sont les clés d'une note d'excellence dans cette matière.",
+      color: "from-amber-500/5 to-yellow-500/5 border-amber-100",
+      iconColor: "bg-amber-500"
     }
-  }, [loading, fullText]);
+  ];
 
-  const generateAIExplanation = (q: string, e: string) => {
-    return `Bonjour ! 👋 En tant que ton tuteur Althoria, je vais t'aider à mieux comprendre ce point.
-
-Dans cette question : "${q.substring(0, 60)}...", le point clé à retenir est que ${e.replace('.', '').toLowerCase()}. 
-
-💡 **L'explication simplifiée :**
-Imprime bien ceci dans ta mémoire : imagine que les concepts ici sont comme des outils de construction. Tu dois d'abord poser la base (le concept principal) pour que la structure (le résultat) tienne debout.
-
-**Ce qu'il faut retenir pour le BAC :**
-Ne te contente pas d'apprendre par cœur, essaie de voir le lien logique. Si tu as d'autres questions, je suis là ! Courage, tu vas cartonner ! 🚀`;
+  const getIntroMessage = () => {
+    if (isCorrect === true) {
+      const positive = [
+        "Fidèle au poste ! Tu as parfaitement maîtrisé cette notion.",
+        "Excellent ! Ton raisonnement est impeccable.",
+        "Bravo ! C'est exactement l'approche attendue au BAC.",
+        "Impressionnant ! Tu maîtrises les subtilités du sujet."
+      ];
+      return positive[Math.floor(Math.random() * positive.length)];
+    } else if (isCorrect === false) {
+      const encouraging = [
+        "Ne te décourage pas ! L'erreur est la mère de l'apprentissage.",
+        "Oups ! Ce piège est classique. Analyse bien ceci :",
+        "Pas tout à fait, mais tu brûles ! Voici l'explication :",
+        "Regardons ensemble où le raisonnement a dévié."
+      ];
+      return encouraging[Math.floor(Math.random() * encouraging.length)];
+    }
+    return "Analysons ensemble les points fondamentaux de cette question.";
   };
 
-  if (!isOpen) return null;
+  const getIntroLabel = () => {
+    if (isCorrect === true) return "Expertise Validée";
+    if (isCorrect === false) return "Correction Détaillée";
+    return "Analyse Professorale";
+  };
 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-        {/* Backdrop */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-slate-900/80 backdrop-blur-md"
         />
 
-        {/* Modal Content */}
         <motion.div
-          initial={{ y: "100%" }}
-          animate={{ y: 0 }}
-          exit={{ y: "100%" }}
-          transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="relative w-full max-w-lg bg-white rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "100%", opacity: 0 }}
+          transition={{ type: "spring", damping: 32, stiffness: 350 }}
+          className="relative w-full max-w-xl bg-white rounded-t-[3.5rem] sm:rounded-[3.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[92vh] border-t border-white/20"
         >
+          {/* Decorative Header Bar */}
+          <div className="w-full h-1.5 bg-gradient-to-r from-primary via-indigo-500 to-rose-500" />
+
           {/* Header */}
-          <div className="p-6 border-b bg-gradient-to-r from-primary/5 to-transparent flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                <Bot className="w-6 h-6" />
+          <div className="p-8 pb-4 flex items-center justify-between border-b bg-slate-50/50">
+            <div className="flex items-center gap-5">
+              <div className="relative">
+                <div className="w-16 h-16 rounded-3xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/20">
+                  <Bot className="w-10 h-10" />
+                </div>
               </div>
               <div>
-                <h3 className="font-black text-sm uppercase tracking-tight flex items-center gap-1.5">
-                  Tuteur IA Althoria <Sparkles className="w-3 h-3 text-amber-500 fill-amber-500" />
+                <h3 className="font-black text-2xl tracking-tighter leading-none text-slate-900">
+                  Le Professeur <span className="text-primary italic">Althoria</span>
                 </h3>
-                <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 border-none text-[8px] h-4 py-0 font-black">PREMIUM</Badge>
+                <div className="flex gap-2 mt-2">
+                   <Badge className="bg-slate-900 text-white border-none text-[8px] font-black px-2 py-0.5 tracking-widest uppercase">Expert BAC</Badge>
+                   <Badge variant="outline" className="border-primary/30 text-primary text-[8px] font-black px-2 py-0.5 tracking-widest uppercase">SÉRIE {terminal || 'EA'}</Badge>
+                </div>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
-              <X className="w-5 h-5" />
+            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full h-12 w-12 hover:bg-white border border-slate-200">
+              <X className="w-6 h-6" />
             </Button>
           </div>
 
           {/* Content Area */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            {/* User message summary */}
-            <div className="flex justify-end">
-               <div className="bg-accent/10 px-4 py-3 rounded-2xl rounded-tr-none max-w-[85%]">
-                  <p className="text-xs font-bold text-muted-foreground flex items-center gap-2 mb-1">
-                     <GraduationCap className="w-3 h-3" /> Question
-                  </p>
-                  <p className="text-sm font-medium leading-tight">"{question}"</p>
-               </div>
-            </div>
+          <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-8 no-scrollbar scroll-smooth">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20">
+                 <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+                 <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest">Le Professeur prépare son explication...</h4>
+              </div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-8 pb-10"
+              >
+                {/* Intro Context Card */}
+                <div className={cn(
+                  "relative px-6 py-8 rounded-[2.5rem] shadow-xl overflow-hidden",
+                  isCorrect === true ? "bg-emerald-600 shadow-emerald-500/20" : isCorrect === false ? "bg-rose-600 shadow-rose-500/20" : "bg-slate-900"
+                )}>
+                   <div className="absolute top-0 right-0 p-6 opacity-10">
+                      <GraduationCap className="w-32 h-32 text-white" />
+                   </div>
+                   <div className="relative z-10">
+                      <p className="text-sm font-black text-white/70 uppercase tracking-widest mb-1 italic">
+                        {getIntroLabel()}
+                      </p>
+                      <p className="text-lg font-bold text-white leading-tight">
+                        "{getIntroMessage()}"
+                      </p>
+                   </div>
+                </div>
 
-            {/* AI Response */}
-            <div className="flex gap-3">
-               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
-                  <Bot className="w-5 h-5" />
-               </div>
-               <div className="bg-white border-2 border-primary/10 px-5 py-4 rounded-3xl rounded-tl-none shadow-sm flex-1">
-                  {loading ? (
-                    <div className="flex flex-col items-center py-4 gap-2">
-                       <Loader2 className="w-6 h-6 text-primary animate-spin" />
-                       <span className="text-[10px] font-black text-muted-foreground uppercase animate-pulse">L'IA réfléchit...</span>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                       <p className="text-sm leading-relaxed font-medium whitespace-pre-wrap">
-                          {displayText}
+                {/* The Core Explanation Sections */}
+                <div className="space-y-6">
+                  {sections.map((section, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 * idx }}
+                      className={cn(
+                        "p-8 rounded-[2.5rem] border shadow-sm bg-gradient-to-br",
+                        section.color
+                      )}
+                    >
+                       <h4 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-4 flex items-center gap-2">
+                          <div className={cn("w-1.5 h-6 rounded-full", section.iconColor)} />
+                          {section.title}
+                       </h4>
+                       <p className="text-base text-slate-800 leading-relaxed font-bold">
+                        {section.content}
                        </p>
-                       <motion.div 
-                         initial={{ scale: 0.9, opacity: 0 }}
-                         animate={{ scale: 1, opacity: 1 }}
-                         transition={{ delay: 0.5 }}
-                         className="p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-3"
-                       >
-                          <Lightbulb className="w-4 h-4 text-amber-500 mt-0.5" />
-                          <p className="text-[11px] text-amber-800 font-bold italic leading-snug">
-                            Astuce : Utilise cet outil surtout pour les questions où tu as hésité !
-                          </p>
-                       </motion.div>
-                    </div>
-                  )}
-               </div>
-            </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
           </div>
 
-          {/* Footer Input Placeholder (Prestige) */}
-          <div className="p-4 border-t bg-slate-50 flex gap-2">
-             <div className="flex-1 bg-white border h-12 rounded-2xl px-4 flex items-center text-muted-foreground text-sm font-medium italic opacity-60">
-                L'IA analyse tes points faibles...
-             </div>
-             <Button size="icon" disabled className="h-12 w-12 rounded-2xl bg-accent text-muted-foreground opacity-50">
-                <Send className="w-5 h-5" />
+          {/* Action Button */}
+          <div className="p-8 pt-0 bg-white">
+             <Button 
+               onClick={onClose}
+               className="w-full h-20 rounded-[2.5rem] bg-slate-900 text-white font-black text-xl shadow-2xl hover:bg-slate-800 transition-all flex gap-3"
+             >
+                <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                Merci Professeur !
              </Button>
           </div>
         </motion.div>
       </div>
+      
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </AnimatePresence>
   );
 }
