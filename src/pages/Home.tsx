@@ -11,7 +11,6 @@ import {
   Bell,   ArrowRight, 
    PlayCircle,
    Sparkles,
-   Target as TargetIcon,
    Award,
    Zap as ZapIcon
  } from 'lucide-react';

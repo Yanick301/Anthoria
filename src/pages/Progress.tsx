@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import { 
   Trophy, 
@@ -16,7 +15,8 @@ import {
   ShieldCheck,
   Flame,
   LayoutGrid,
-  BookOpen
+  BookOpen,
+  Bell
 } from 'lucide-react';
 import { ROUTE_PATHS, getSubjectsForTerminal } from '@/lib/index';
 import { NavLink } from 'react-router-dom';
@@ -72,7 +72,12 @@ export default function ProgressPage() {
 
   // Préparer un Set des dates d'activité pour une recherche O(1)
   const activityDates = useMemo(() => {
-    return new Set(sessions.map(s => s.date.split('T')[0]));
+    if (!sessions) return new Set<string>();
+    return new Set(
+      sessions
+        .filter(s => s && s.date)
+        .map(s => s.date.split('T')[0])
+    );
   }, [sessions]);
 
   const containerVariants = {
@@ -342,9 +347,18 @@ export default function ProgressPage() {
                             {Array.from({ length: 7 }).map((_, dayIndex) => {
                                const date = new Date();
                                date.setDate(date.getDate() - (41 - (weekIndex * 7 + dayIndex)));
-              const dateStr = format(date, 'yyyy-MM-dd');
-              const hasActivity = activityDates.has(dateStr);
-              const isToday = dateStr === format(new Date(), 'yyyy-MM-dd');
+              
+                               // Native YYYY-MM-DD format
+                               const year = date.getFullYear();
+                               const month = String(date.getMonth() + 1).padStart(2, '0');
+                               const day = String(date.getDate()).padStart(2, '0');
+                               const dateStr = `${year}-${month}-${day}`;
+              
+                               const hasActivity = activityDates.has(dateStr);
+              
+                               const now = new Date();
+                               const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                               const isToday = dateStr === todayStr;
                                return (
                                   <div
                                      key={dayIndex}
