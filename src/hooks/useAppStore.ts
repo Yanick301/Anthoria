@@ -42,21 +42,33 @@ export const useAppStore = create<AppState & AppActions>()(
       notificationTime: '18:00',
 
       setProfile: (name, terminal) => {
-        set(() => ({
-          studentName: name.trim(),
-          terminal,
-          onboardingDone: true,
-          progress: {} as Record<string, UserProgress>,
-          sessions: [],
-          points: 0,
-          streak: 0,
-          lastStudyDate: '',
-          completedExercises: new Set<string>(),
-          mockExamResults: [],
-          achievements: getAchievementsForTerminal(terminal),
-          invitesSent: 0,
-          lastSeenVersion: '1.0.0',
-        }));
+        try {
+          const achievements = getAchievementsForTerminal(terminal);
+          set(() => ({
+            studentName: (name || '').trim(),
+            terminal,
+            onboardingDone: true,
+            progress: {},
+            sessions: [],
+            points: 0,
+            streak: 0,
+            lastStudyDate: '',
+            completedExercises: new Set(),
+            mockExamResults: [],
+            achievements: achievements || [],
+            invitesSent: 0,
+            lastSeenVersion: '1.0.0',
+          }));
+        } catch (error) {
+          console.error('Error setting profile:', error);
+          // Fallback minimal state
+          set({ 
+            studentName: (name || '').trim(), 
+            terminal, 
+            onboardingDone: true,
+            achievements: [] 
+          });
+        }
       },
 
       setStudentName: (name) => set({ studentName: name.trim() }),
@@ -149,23 +161,29 @@ export const useAppStore = create<AppState & AppActions>()(
  
       checkAchievements: () => {
         const state = get();
+        if (!state.achievements) return;
+        
         const newAchievements = state.achievements.map(achievement => {
           if (achievement.unlocked) return achievement;
 
           const requirements = achievement.requirement.split(',');
           const isMet = requirements.every(req => {
-            const [type, value, threshold] = req.split(':');
+            const parts = req.split(':');
+            const type = parts[0];
+            const value = parts[1];
+            const threshold = parts[2];
             
             switch (type) {
               case 'streak':
-                return state.streak >= parseInt(value);
+                return state.streak >= (parseInt(value) || 0);
               case 'mock-exam':
-                return state.mockExamResults.some(r => (r.score / r.total * 20) >= parseInt(value));
+                return state.mockExamResults.some(r => (r.score / r.total * 20) >= (parseInt(value) || 0));
               case 'exercises':
-                return state.completedExercises.size >= parseInt(value);
+                return state.completedExercises.size >= (parseInt(value) || 0);
               case 'subject':
-                return (state.progress[value]?.mastery || 0) >= parseInt(threshold);
+                return (state.progress[value]?.mastery || 0) >= (parseInt(threshold) || 0);
               case 'type':
+                if (!EXERCISES) return false;
                 // Check count of specific exercise types completed
                 const typeCount = Object.values(state.progress).reduce((acc, p) => {
                   return acc + p.completedExercises.filter(id => {
@@ -173,7 +191,7 @@ export const useAppStore = create<AppState & AppActions>()(
                     return ex?.type === value;
                   }).length;
                 }, 0);
-                return typeCount >= parseInt(threshold);
+                return typeCount >= (parseInt(threshold) || 0);
               default:
                 return false;
             }

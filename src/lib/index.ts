@@ -278,7 +278,7 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
     [
       { day: 'Lundi', subjectIds: ['economie'], activities: ['Notions de base : agents économiques', 'QCM & schémas'], exerciseCount: 12 },
       { day: 'Mardi', subjectIds: ['economie'], activities: ['Marchés & prix', 'Exercices graphiques'], exerciseCount: 12 },
-      { day: 'Mercredi', subjectIds: ['histoire-geo'], activities: ['Relations internationales', 'Étude de documents'], exerciseCount: 10 },
+      { day: 'Mercredi', subjectIds: ['histoire', 'geographie'], activities: ['Relations internationales', 'Étude de documents'], exerciseCount: 10 },
       { day: 'Jeudi', subjectIds: ['francais'], activities: ['Dissertation économique', 'Méthodologie'], exerciseCount: 8 },
       { day: 'Vendredi', subjectIds: ['anglais'], activities: ['Business English', 'Reading & vocabulary'], exerciseCount: 8 },
       { day: 'Samedi', subjectIds: ['economie', 'histoire-geo'], activities: ['BAC Blanc Eco / HG'], exerciseCount: 30 },
@@ -319,7 +319,7 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
       { day: 'Mardi', subjectIds: ['sciences-physiques'], activities: ['PCT : Mécanique Newtonienne', 'Exercices pratiques'], exerciseCount: 12 },
       { day: 'Mercredi', subjectIds: ['mathematiques'], activities: ['Suites numériques & probabilités', 'Calculs'], exerciseCount: 12 },
       { day: 'Jeudi', subjectIds: ['chimie'], activities: ['Acides/Bases & Saponification', 'TP théoriques'], exerciseCount: 12 },
-      { day: 'Vendredi', subjectIds: ['philosophie', 'histoire'], activities: ['Philosophie & Histoire-Géo', 'Rédaction'], exerciseCount: 10 },
+      { day: 'Vendredi', subjectIds: ['philosophie', 'histoire', 'geographie'], activities: ['Philosophie & Histoire-Géo', 'Rédaction'], exerciseCount: 10 },
       { day: 'Samedi', subjectIds: ['biologie', 'sciences-physiques'], activities: ['BAC Blanc Série D - SVT/PCT'], exerciseCount: 35 },
       { day: 'Dimanche', subjectIds: [], activities: ['Repos ou révision légère SVT'], exerciseCount: 5 },
     ],
@@ -332,6 +332,8 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
       ? bPlans
       : terminal === 'A'
       ? aPlans
+      : terminal === 'D'
+      ? dPlans
       : terminal === 'C'
       ? cPlans
       : eaPlans;
