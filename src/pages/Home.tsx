@@ -23,9 +23,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ReleaseNotesModal } from '@/components/ReleaseNotesModal';
+import { APP_CONSTANTS } from '@/lib/constants';
 
  export default function Home() {
-   const { points, streak, progress, lastStudyDate, terminal, achievements } = useAppStore();
+   const { studentName, points, streak, progress, lastStudyDate, terminal, achievements } = useAppStore();
    const level = calculateLevel(points);
    const xp = getXPProgress(points);
    const recentAchievements = achievements.filter(a => a.unlocked).slice(-3).reverse();
@@ -34,10 +35,28 @@ import { ReleaseNotesModal } from '@/components/ReleaseNotesModal';
     (p) => p.day.toLowerCase() === today.toLowerCase()
   );
 
+  // Compte à rebours BAC
+  const bacDate = new Date(APP_CONSTANTS.BAC_DATE);
+  const now = new Date();
+  const diffTime = bacDate.getTime() - now.getTime();
+  const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
   const subjects = getSubjectsForTerminal(terminal);
   const subjectsCount = subjects.length;
   const masteredCount = Object.values(progress).filter(p => p.mastery > 80).length;
   const totalCompleted = Object.values(progress).reduce((acc, curr) => acc + curr.completedExercises.length, 0);
+
+  // Calcul dynamique de la progression globale (moyenne des maîtrises)
+  const globalProgress = subjectsCount > 0
+    ? Math.round(
+        subjects.reduce((acc, s) => acc + (progress[s.id]?.mastery ?? 0), 0) / subjectsCount
+      )
+    : 0;
+
+  // Exercices restants dans la semaine courante
+  const weekPlan = getCurrentWeekPlan(terminal, 0);
+  const weeklyExercisesTotal = weekPlan.reduce((acc, day) => acc + day.exerciseCount, 0);
+  const weeklyRemaining = Math.max(0, weeklyExercisesTotal - totalCompleted);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -74,7 +93,7 @@ import { ReleaseNotesModal } from '@/components/ReleaseNotesModal';
              </div>
            </div>
            <div>
-             <h1 className="text-xl font-black tracking-tight leading-tight">Bonjour, {useAppStore.getState().studentName || 'Cher Bachelier'} !</h1>
+             <h1 className="text-xl font-black tracking-tight leading-tight">Bonjour, {studentName || 'Cher Bachelier'} !</h1>
              <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider mt-1 flex items-center gap-1.5 text-primary">
                 XP: {points} • <span className="opacity-60">{xp.current} / {xp.next}</span>
              </p>
@@ -101,17 +120,22 @@ import { ReleaseNotesModal } from '@/components/ReleaseNotesModal';
             <Target className="h-28 w-28" />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2 font-black italic">
-              <Activity className="h-5 w-5 animate-pulse" />
-              OBJECTIF BAC {terminal || '2026'}
+            <CardTitle className="text-lg flex items-center justify-between font-black italic">
+              <div className="flex items-center gap-2">
+                <Activity className="h-5 w-5 animate-pulse" />
+                OBJECTIF BAC {terminal || '2026'}
+              </div>
+              <Badge className="bg-white/20 text-white border-white/20 px-2 py-0.5 rounded-lg text-[10px]">
+                J-{daysLeft}
+              </Badge>
             </CardTitle>
           </CardHeader>
            <CardContent className="space-y-4">
              <div className="flex justify-between items-end">
-               <span className="text-3xl font-bold">42%</span>
+               <span className="text-3xl font-bold">{globalProgress}%</span>
                <span className="text-sm text-blue-100 italic font-medium">Prêt pour les épreuves</span>
              </div>
-             <Progress value={42} className="h-2.5 bg-white/20" />
+             <Progress value={globalProgress} className="h-2.5 bg-white/20" />
              <div className="grid grid-cols-2 gap-2 pt-2 text-center text-[10px] text-blue-50 uppercase font-bold">
                <div className="bg-white/10 p-2.5 rounded-2xl backdrop-blur-sm border border-white/10">
                  <div className="text-xl font-black">{totalCompleted}</div>
@@ -263,7 +287,9 @@ import { ReleaseNotesModal } from '@/components/ReleaseNotesModal';
         </div>
         <p className="text-xs text-muted-foreground leading-relaxed">
           <span className="font-bold text-primary block">Rappel de révision</span>
-          Il vous reste 30 exercices pour atteindre votre objectif hebdomadaire !
+          {weeklyRemaining > 0
+            ? `Il vous reste ${weeklyRemaining} exercices pour atteindre votre objectif hebdomadaire !`
+            : '🎉 Objectif de la semaine atteint ! Continuez sur votre lancée !'}
         </p>
       </motion.div>
     </motion.div>

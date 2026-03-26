@@ -9,13 +9,14 @@ import {
   BookOpen,
   ChevronRight,
   Target,
-  Trophy
+  Trophy,
+  Activity
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/hooks/useAppStore';
 import { cn } from '@/lib/utils';
 
-const CURRENT_VERSION = '2.1.0';
+const CURRENT_VERSION = '3.0.0';
 
 type TourStep = {
   id: string;
@@ -25,7 +26,7 @@ type TourStep = {
   description: string;
   color: string;
   accent: string;
-  image: string; // Placeholder for visual representation
+  image: string;
 };
 
 export function ReleaseNotesModal() {
@@ -55,44 +56,74 @@ export function ReleaseNotesModal() {
 
   const tourSteps: TourStep[] = [
     {
-      id: 'welcome',
+      id: 'v105',
       icon: <Rocket className="w-8 h-8 text-white" />,
-      title: "Mise à jour v2.1",
-      subtitle: "Althoria s'améliore !",
-      description: "Nous avons ajouté des fonctionnalités incroyables pour booster ta réussite au BAC. Découvre-les maintenant.",
+      title: "Anthoria v1.0.5",
+      subtitle: "OPTIMISATION & NAVIGATION",
+      description: "Navigation directe par chapitre dans les leçons, optimisation du Heatmap d'activité, correction de la réactivité du nom d'utilisateur, enregistrement automatique des sessions, et centralisation de la date du BAC.",
+      color: "bg-blue-700",
+      accent: "text-blue-100",
+      image: "v105_features"
+    },
+    {
+      id: 'welcome',
+      icon: <Sparkles className="w-8 h-8 text-white" />,
+      title: "Anthoria v3.0",
+      subtitle: "LA RÉVOLUTION EST LÀ",
+      description: "Bienvenue dans la version la plus complète d'Anthoria. Nous avons tout refait pour ta réussite.",
       color: "bg-slate-900",
       accent: "text-primary",
-      image: "rocket"
+      image: "welcome"
     },
     {
-      id: 'challenges',
-      icon: <Share2 className="w-8 h-8 text-white" />,
-      title: "Clash of Brains 2.0",
-      subtitle: "Défie tes amis sur WhatsApp",
-      description: "Partage ton score et génère un lien de défi unique. Tes amis affrontent les mêmes questions que toi !",
-      color: "bg-emerald-600",
-      accent: "text-emerald-100",
-      image: "share"
+      id: 'multiseries',
+      icon: <BookOpen className="w-8 h-8 text-white" />,
+      title: "Toutes les Séries",
+      subtitle: "A, B, C ET EA",
+      description: "Plus de 75 nouveaux exercices ajoutés. Que tu sois en littéraire ou scientifique, Anthoria est là.",
+      color: "bg-indigo-600",
+      accent: "text-indigo-100",
+      image: "content"
     },
     {
-      id: 'aitutor',
-      icon: <Sparkles className="w-8 h-8 text-white" />,
-      title: "Tuteur IA Personnel",
-      subtitle: "Ne reste plus jamais bloqué",
-      description: "Un nouveau bouton 'Demander à l'IA' est disponible pour t'expliquer chaque erreur avec pédagogie.",
+      id: 'activity',
+      icon: <Activity className="w-8 h-8 text-white" />,
+      title: "Suivi d'Activité",
+      subtitle: "HEATMAP DYNAMIQUE",
+      description: "Visualise ton effort quotidien sur les 42 derniers jours dans le nouvel onglet Activité.",
+      color: "bg-rose-600",
+      accent: "text-rose-100",
+      image: "heatmap"
+    },
+    {
+      id: 'notifications',
+      icon: <Zap className="w-8 h-8 text-white" />,
+      title: "Rappels de Révision",
+      subtitle: "RESTE CONCENTRÉ",
+      description: "Configure tes notifications pour ne jamais manquer une séance et rester régulier.",
       color: "bg-amber-500",
       accent: "text-amber-100",
-      image: "ai"
+      image: "notifs"
     },
     {
-      id: 'annales',
-      icon: <BookOpen className="w-8 h-8 text-white" />,
-      title: "Annales BAC Bénin",
-      subtitle: "VÉRITABLES SUJETS",
-      description: "Plus de 15 nouveaux exercices tirés des vrais examens de Maths, Physique et SVT.",
-      color: "bg-blue-600",
+      id: 'bac',
+      icon: <Target className="w-8 h-8 text-white" />,
+      title: "Compte à rebours",
+      subtitle: "LE JOUR J APPROCHE",
+      description: "Suis en temps réel le nombre de jours restants avant le BAC directement sur ton dashboard.",
+      color: "bg-primary",
       accent: "text-blue-100",
-      image: "book"
+      image: "countdown"
+    },
+    {
+      id: 'reliability',
+      icon: <CheckCircle2 className="w-8 h-8 text-white" />,
+      title: "Fiabilité Totale",
+      subtitle: "SYSTÈME ASSAINI",
+      description: "Correction de toutes les incohérences de données pour une expérience fluide et sans bug.",
+      color: "bg-emerald-600",
+      accent: "text-emerald-100",
+      image: "clean"
     }
   ];
 

@@ -8,6 +8,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useNotifications } from '@/hooks/useNotifications';
+import { Switch } from '@/components/ui/switch';
+import { Bell, TestTube } from 'lucide-react';
 
 const SERIES: { value: 'A' | 'B' | 'C' | 'EA'; label: string }[] = [
   { value: 'A', label: 'Série A (Littéraire)' },
@@ -18,11 +21,23 @@ const SERIES: { value: 'A' | 'B' | 'C' | 'EA'; label: string }[] = [
 
 export default function Settings() {
   const navigate = useNavigate();
-  const { studentName, terminal, setStudentName, setTerminal, resetProgress, resetAll } = useAppStore();
+  const { 
+    studentName, 
+    terminal, 
+    setStudentName, 
+    setTerminal, 
+    resetProgress, 
+    resetAll,
+    notificationsEnabled,
+    notificationTime,
+    setNotificationPrefs
+  } = useAppStore() as any;
+  const { requestPermission, testNotification } = useNotifications();
   const [name, setName] = useState(studentName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showResetAllConfirm, setShowResetAllConfirm] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [notifTime, setNotifTime] = useState(notificationTime || '18:00');
 
   const handleSaveName = () => {
     setStudentName(name);
@@ -74,6 +89,57 @@ export default function Settings() {
                 {saved ? <Check className="h-4 w-4" /> : 'Enregistrer'}
               </Button>
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-primary font-semibold">
+              <Bell className="h-5 w-5" />
+              <span>Notifications</span>
+            </div>
+            <Switch 
+              checked={notificationsEnabled} 
+              onCheckedChange={async (checked: boolean) => {
+                if (checked) {
+                  const granted = await requestPermission();
+                  if (!granted) return;
+                }
+                setNotificationPrefs(checked, notifTime);
+              }} 
+            />
+          </div>
+          
+          <div className="space-y-4 pt-2">
+            <div className="flex items-center justify-between gap-4">
+              <Label htmlFor="notif-time" className="text-sm">Heure du rappel quotidien</Label>
+              <Input
+                id="notif-time"
+                type="time"
+                value={notifTime}
+                onChange={(e) => {
+                  const newTime = e.target.value;
+                  setNotifTime(newTime);
+                  if (notificationsEnabled) {
+                    setNotificationPrefs(true, newTime);
+                  }
+                }}
+                className="w-24 h-8 text-xs px-2"
+              />
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full gap-2 text-xs h-9 border-dashed"
+              onClick={testNotification}
+              disabled={!notificationsEnabled}
+            >
+              <TestTube className="h-4 w-4" />
+              Tester la notification
+            </Button>
           </div>
         </CardContent>
       </Card>

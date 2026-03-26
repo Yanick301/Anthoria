@@ -69,6 +69,11 @@ export default function ProgressPage() {
   const confidenceScore = Math.round((completionRate * 0.4 + examPerformance * 0.5 + (streak > 7 ? 0.1 : (streak / 70))) * 100);
 
 
+  // Préparer un Set des dates d'activité pour une recherche O(1)
+  const activityDates = useMemo(() => {
+    return new Set(sessions.map(s => s.date.split('T')[0]));
+  }, [sessions]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -324,6 +329,43 @@ export default function ProgressPage() {
           </TabsContent>
 
           <TabsContent value="history" className="mt-6 space-y-4">
+             {/* Heatmap d'Activité */}
+             <Card className="p-4 border-none shadow-sm bg-white overflow-hidden">
+                <CardHeader className="p-0 mb-4">
+                   <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Heatmap d'Activité (42 derniers jours)</CardTitle>
+                </CardHeader>
+                <div className="flex flex-col gap-2">
+                   <div className="flex gap-1 justify-between">
+                      {Array.from({ length: 6 }).map((_, weekIndex) => (
+                         <div key={weekIndex} className="grid grid-rows-7 gap-1">
+                            {Array.from({ length: 7 }).map((_, dayIndex) => {
+                               const date = new Date();
+                               date.setDate(date.getDate() - (41 - (weekIndex * 7 + dayIndex)));
+              const dateStr = format(date, 'yyyy-MM-dd');
+              const hasActivity = activityDates.has(dateStr);
+              const isToday = dateStr === format(new Date(), 'yyyy-MM-dd');
+                               return (
+                                  <div
+                                     key={dayIndex}
+                                     className={`w-3 h-3 rounded-sm ${
+                                        hasActivity
+                                           ? 'bg-primary shadow-[0_0_8px_rgba(79,70,229,0.4)]'
+                                           : 'bg-slate-100'
+                                     }`}
+                                     title={dateString}
+                                  />
+                               );
+                            })}
+                         </div>
+                      ))}
+                   </div>
+                   <div className="flex justify-between text-[8px] text-slate-400 font-bold uppercase mt-1 px-1">
+                      <span>Il y a 6 semaines</span>
+                      <span>Aujourd'hui</span>
+                   </div>
+                </div>
+             </Card>
+
              {mockExamResults.length > 0 ? (
                 <div className="space-y-3">
                    <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Derniers BAC Blancs</h3>

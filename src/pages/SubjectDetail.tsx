@@ -118,7 +118,7 @@ export default function SubjectDetail() {
             {subject.chapters.map((chapter, index) => (
               <NavLink
                 key={chapter.id}
-                to={ROUTE_PATHS.LESSON.replace(':id', subject.id)}
+                to={ROUTE_PATHS.LESSON.replace(':id', subject.id).replace(':chapterIndex?', index.toString())}
                 className="block group"
               >
                 <Card className="hover:shadow-md transition-all border-none shadow-sm overflow-hidden bg-white">

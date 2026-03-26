@@ -32,7 +32,13 @@ const QUIZ_LENGTH = 10;
 export default function ExercisePractice() {
   const { subjectId } = useParams<{ subjectId: string }>();
   const navigate = useNavigate();
-  const { completeExercise, updateStreak, terminal } = useAppStore();
+  const { 
+    completeExercise, 
+    updateStreak, 
+    terminal,
+    showAITutor,
+    addSession,
+  } = useAppStore();
   
   const subject = getSubjectsForTerminal(terminal).find(s => s.id === subjectId);
 
@@ -102,7 +108,17 @@ export default function ExercisePractice() {
       setAnswered(false);
       setQuestionTime(0);
     } else {
-      setPhase('result');
+      // Enregistrer la session
+    addSession({
+      id: crypto.randomUUID(),
+      subjectId: subjectId || '',
+      type: 'quiz',
+      score: (score / exercises.length) * 100,
+      duration: duration,
+      timestamp: Date.now(),
+    });
+
+    setPhase('result');
     }
   };
 

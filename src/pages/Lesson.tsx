@@ -28,10 +28,12 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 
 export default function Lesson() {
-  const { id } = useParams<{ id: string }>();
+  const { id, chapterIndex } = useParams<{ id: string, chapterIndex?: string }>();
   const navigate = useNavigate();
   const { progress } = useAppStore();
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(
+    chapterIndex ? parseInt(chapterIndex, 10) : 0
+  );
 
   const subject = SUBJECTS.find(s => s.id === id);
   if (!subject) return <div className="p-8 text-center">Sujet non trouvé.</div>;

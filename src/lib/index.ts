@@ -5,7 +5,7 @@ export const ROUTE_PATHS = {
   HOME: '/',
   SUBJECTS: '/matieres',
   SUBJECT_DETAIL: '/matieres/:id',
-  LESSON: '/matieres/:id/lecon',
+  LESSON: '/matieres/:id/lecon/:chapterIndex?',
   FLASHCARDS: '/matieres/:id/flashcards',
   QUIZ: '/matieres/:id/quiz',
   EXERCISES: '/exercices',
@@ -135,6 +135,10 @@ export interface AppState {
   mockExamResults: MockExamResult[];
   invitesSent: number;
   lastSeenVersion: string;
+
+  // Préférences notifications
+  notificationsEnabled: boolean;
+  notificationTime: string;
 }
 
 export interface MockExamResult {

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AppState, StudySession, MockExamResult, Achievement, TerminalSerie, UserProgress } from '@/lib/index';
 import { getAchievementsForTerminal } from '@/data/achievements-by-series';
+import { SUBJECTS } from '@/data/subjects';
 
 interface AppActions {
   setProfile: (name: string, terminal: TerminalSerie) => void;
@@ -17,6 +18,7 @@ interface AppActions {
   resetAll: () => void;
   incrementInvites: () => void;
   setLastSeenVersion: (version: string) => void;
+  setNotificationPrefs: (enabled: boolean, time: string) => void;
 }
 
 export const useAppStore = create<AppState & AppActions>()(
@@ -35,6 +37,8 @@ export const useAppStore = create<AppState & AppActions>()(
       mockExamResults: [] as MockExamResult[],
       invitesSent: 0,
       lastSeenVersion: '1.0.0',
+      notificationsEnabled: false,
+      notificationTime: '18:00',
 
       setProfile: (name, terminal) => {
         set(() => ({
@@ -82,6 +86,9 @@ export const useAppStore = create<AppState & AppActions>()(
             const newCompleted = [...currentProgress.completedExercises, exerciseId];
             const newScores = { ...currentProgress.scores, [exerciseId]: isCorrect ? 100 : 0 };
             const newCompletedSet = new Set(state.completedExercises).add(exerciseId);
+            // Calcul dynamique: on base la masterie sur le vrai nombre d'exercices de la matière
+            const subject = SUBJECTS.find(s => s.id === subjectId);
+            const total = subject?.totalExercises || 50;
             
             return {
               progress: {
@@ -91,7 +98,7 @@ export const useAppStore = create<AppState & AppActions>()(
                   completedExercises: newCompleted,
                   scores: newScores,
                   lastStudied: new Date().toISOString(),
-                  mastery: Math.min(100, Math.round((newCompleted.length / 50) * 100)),
+                  mastery: Math.min(100, Math.round((newCompleted.length / total) * 100)),
                 },
               },
               completedExercises: newCompletedSet,
@@ -120,8 +127,9 @@ export const useAppStore = create<AppState & AppActions>()(
       updatePoints: (pts) => set((state) => ({ points: state.points + pts })),
 
       updateStreak: () => {
+        const state = get();
         const today = new Date().toISOString().split('T')[0];
-        const lastDate = get().lastStudyDate;
+        const lastDate = state.lastStudyDate;
         
         if (lastDate === today) return;
 
@@ -129,11 +137,13 @@ export const useAppStore = create<AppState & AppActions>()(
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-        set((state) => ({
-          streak: lastDate === yesterdayStr ? state.streak + 1 : 1,
+        set((s) => ({
+          streak: lastDate === yesterdayStr ? s.streak + 1 : 1,
           lastStudyDate: today,
         }));
-        get().checkAchievements();
+        
+        // Use a timeout or next tick to check achievements to avoid recursive state updates
+        setTimeout(() => get().checkAchievements(), 0);
       },
  
       checkAchievements: () => {
@@ -200,6 +210,11 @@ export const useAppStore = create<AppState & AppActions>()(
       incrementInvites: () => set((state) => ({ invitesSent: (state.invitesSent || 0) + 1 })),
 
       setLastSeenVersion: (version) => set({ lastSeenVersion: version }),
+
+      setNotificationPrefs: (enabled, time) => set({ 
+        notificationsEnabled: enabled, 
+        notificationTime: time 
+      }),
     }),
     {
       name: 'bac-ea-storage',

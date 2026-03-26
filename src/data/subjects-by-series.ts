@@ -12,7 +12,6 @@ const SERIES_MAPPING: Record<TerminalSerie, string[]> = {
     'francais',
     'anglais',
     'mathematiques',
-    'education-civique'
   ],
   'B': [
     'philosophie',
@@ -22,16 +21,16 @@ const SERIES_MAPPING: Record<TerminalSerie, string[]> = {
     'francais',
     'anglais',
     'mathematiques',
-    'biologie' // SVT
+    'biologie',
   ],
   'C': [
     'mathematiques',
-    'physics', // If exists, or sciences-physiques
-    'chemistry', // If exists, or chimie
+    'sciences-physiques',
+    'chimie',
     'biologie',
     'francais',
     'anglais',
-    'philosophie'
+    'philosophie',
   ],
   'EA': [
     'mobilisation-eau',
@@ -42,24 +41,16 @@ const SERIES_MAPPING: Record<TerminalSerie, string[]> = {
     'sciences-physiques',
     'mathematiques',
     'francais',
-    'anglais'
-  ]
+    'anglais',
+  ],
 };
 
 export function getSubjectsForTerminal(terminal: TerminalSerie | null): Subject[] {
   if (!terminal) return SUBJECTS.filter(s => SERIES_MAPPING['EA'].includes(s.id));
-  
+
   const subjectIds = SERIES_MAPPING[terminal] || SERIES_MAPPING['EA'];
-  
-  // On récupère les sujets complets depuis la base centrale
+
   return subjectIds
-    .map(id => {
-      // Mapping spécial pour les IDs qui diffèrent entre les séries et la base
-      let searchId = id;
-      if (id === 'physics') searchId = 'sciences-physiques';
-      if (id === 'chemistry') searchId = 'chimie';
-      
-      return SUBJECTS.find(s => s.id === searchId);
-    })
+    .map(id => SUBJECTS.find(s => s.id === id))
     .filter((s): s is Subject => s !== undefined);
 }

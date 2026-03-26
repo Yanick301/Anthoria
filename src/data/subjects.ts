@@ -9,7 +9,7 @@ export const SUBJECTS: Subject[] = [
     color: '#0A4DA6',
     gradient: 'from-blue-700 to-blue-500',
     description: 'Cycle hydrologique, eaux souterraines, captages, barrages et systèmes d\'adduction.',
-    totalExercises: 60,
+    totalExercises: 5,
     chapters: [
       {
         id: 'cycle-eau',
@@ -129,7 +129,7 @@ Où k = conductivité hydraulique (m/s), i = gradient hydraulique, A = section (
     color: '#0891B2',
     gradient: 'from-cyan-700 to-cyan-500',
     description: 'Filières de traitement, coagulation, floculation, décantation, filtration, désinfection.',
-    totalExercises: 80,
+    totalExercises: 4,
     chapters: [
       {
         id: 'qualite-eau',
@@ -261,7 +261,7 @@ Où N = germes résiduels, C = concentration désinfectant, t = temps contact
     color: '#0D9488',
     gradient: 'from-teal-700 to-teal-500',
     description: 'Collecte et traitement des eaux usées, boues, assainissement autonome et collectif.',
-    totalExercises: 80,
+    totalExercises: 22,
     chapters: [
       {
         id: 'eaux-usees',
@@ -409,7 +409,7 @@ Ou V = Q × ts (Q = débit journalier, ts = temps de séjour 24-72h)`,
     color: '#0369A1',
     gradient: 'from-sky-700 to-sky-500',
     description: 'Hydraulique en charge, pertes de charge, AEP, réseaux d\'irrigation et d\'assainissement.',
-    totalExercises: 80,
+    totalExercises: 21,
     chapters: [
       {
         id: 'hydraulique-charge',
@@ -519,7 +519,7 @@ Où K = coefficient Strickler (80-100 pour PVC)
     color: '#4338CA',
     gradient: 'from-indigo-700 to-indigo-500',
     description: 'Gestion de systèmes, maintenance, plans de gestion, rapports techniques.',
-    totalExercises: 50,
+    totalExercises: 10,
     chapters: [
       {
         id: 'gestion-systemes',
@@ -577,7 +577,7 @@ Contenu obligatoire :
     color: '#7C3AED',
     gradient: 'from-purple-700 to-purple-500',
     description: 'Mécanique des fluides, électricité, thermodynamique appliquées au génie sanitaire.',
-    totalExercises: 69,
+    totalExercises: 20,
     chapters: [
       {
         id: 'mecanique-fluides',
@@ -639,7 +639,7 @@ Cd ≈ 0,63 pour déversoir à mince paroi
     color: '#EA580C',
     gradient: 'from-orange-600 to-orange-400',
     description: 'Algèbre, analyse, statistiques, probabilités et géométrie appliquées au génie sanitaire.',
-    totalExercises: 68,
+    totalExercises: 19,
     chapters: [
       {
         id: 'algebre',
@@ -796,7 +796,7 @@ CV = σ/x̄ × 100%
     color: '#BE185D',
     gradient: 'from-rose-700 to-rose-500',
     description: 'Expression écrite, rédaction technique, résumé, analyse de texte.',
-    totalExercises: 25,
+    totalExercises: 6,
     chapters: [
       {
         id: 'francais-dissertation',
@@ -884,7 +884,7 @@ Reformulation concise d'un texte argumentatif respectant l'ordre des idées et l
     color: '#059669',
     gradient: 'from-green-700 to-green-500',
     description: 'Vocabulaire technique, lecture de textes en anglais sur l\'eau et l\'assainissement.',
-    totalExercises: 15,
+    totalExercises: 7,
     chapters: [
       {
         id: 'anglais-comprehension-ecrite',
@@ -950,7 +950,7 @@ Don't panic over unknown words! Use the words around them, the prefixes/suffixes
     color: '#A78BFA',
     gradient: 'from-violet-600 to-violet-400',
     description: 'La Conscience, L\'Inconscient, La Liberté, Le Devoir, La Justice...',
-    totalExercises: 135,
+    totalExercises: 12,
     chapters: [
       {
         id: 'philo-conscience',
@@ -1357,7 +1357,7 @@ L'inconscient désigne l'ensemble des phénomènes psychiques qui échappent à 
     color: '#F87171',
     gradient: 'from-red-600 to-red-400',
     description: 'Colonisation, Décolonisation, Guerre Froide, Indépendances Africaines...',
-    totalExercises: 109,
+    totalExercises: 5,
     chapters: [
       {
         id: 'hist-relations-1930-1945',
@@ -1648,7 +1648,7 @@ Fin de l'hégémonie absolue des anciennes superpuissances au profit d'acteurs �
     color: '#34D399',
     gradient: 'from-emerald-600 to-emerald-400',
     description: 'Population, Urbanisation, Mondialisation, Défis de l\'Afrique...',
-    totalExercises: 105,
+    totalExercises: 4,
     chapters: [
       {
         id: 'geo-population-migrations',
@@ -1910,7 +1910,7 @@ Valorisation des richesses naturelles et culturelles pour le développement.
     color: '#10B981',
     gradient: 'from-emerald-600 to-emerald-400',
     description: 'Acides-Bases, Cinétique Chimique, Chimie Organique, Solutions aqueuses...',
-    totalExercises: 82,
+    totalExercises: 7,
     chapters: [
       {
         id: 'chimie-acides-bases',
@@ -1947,7 +1947,7 @@ La réaction entre un acide fort et une base forte est totale. Les solutions tam
     color: '#EC4899',
     gradient: 'from-pink-600 to-pink-400',
     description: 'Génétique, Immunologie, Physiologie Nerveuse...',
-    totalExercises: 66,
+    totalExercises: 13,
     chapters: [
       {
         id: 'svt-genetique',
@@ -2068,7 +2068,7 @@ Le SIDA (VIH), les allergies, les vaccins et les sérums.`,
     color: '#0EA5E9',
     gradient: 'from-sky-600 to-sky-400',
     description: 'Analyse des systèmes économiques, marchés, croissance et développement.',
-    totalExercises: 120,
+    totalExercises: 6,
     chapters: [
       {
         id: 'eco-agents-economiques',
