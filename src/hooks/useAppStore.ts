@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { AppState, StudySession, MockExamResult, Achievement, TerminalSerie, UserProgress } from '@/lib/index';
 import { getAchievementsForTerminal } from '@/data/achievements-by-series';
 import { SUBJECTS } from '@/data/subjects';
+import { EXERCISES } from '@/data/exercises';
 
 interface AppActions {
   setProfile: (name: string, terminal: TerminalSerie) => void;
@@ -150,7 +151,7 @@ export const useAppStore = create<AppState & AppActions>()(
         const state = get();
         const newAchievements = state.achievements.map(achievement => {
           if (achievement.unlocked) return achievement;
- 
+
           const requirements = achievement.requirement.split(',');
           const isMet = requirements.every(req => {
             const [type, value, threshold] = req.split(':');
@@ -164,17 +165,26 @@ export const useAppStore = create<AppState & AppActions>()(
                 return state.completedExercises.size >= parseInt(value);
               case 'subject':
                 return (state.progress[value]?.mastery || 0) >= parseInt(threshold);
+              case 'type':
+                // Check count of specific exercise types completed
+                const typeCount = Object.values(state.progress).reduce((acc, p) => {
+                  return acc + p.completedExercises.filter(id => {
+                    const ex = EXERCISES.find(e => e.id === id);
+                    return ex?.type === value;
+                  }).length;
+                }, 0);
+                return typeCount >= parseInt(threshold);
               default:
                 return false;
             }
           });
- 
+
           if (isMet) {
             return { ...achievement, unlocked: true, unlockedAt: new Date().toISOString() };
           }
           return achievement;
         });
- 
+
         if (JSON.stringify(newAchievements) !== JSON.stringify(state.achievements)) {
           set({ achievements: newAchievements });
         }
@@ -218,13 +228,27 @@ export const useAppStore = create<AppState & AppActions>()(
     }),
     {
       name: 'bac-ea-storage',
-      // Convert Set to Array for persistence (Set -> Array)
+      // Convert Set to Array for persistence and include ALL state fields
       partialize: (state) => ({
-        ...state,
+        studentName: state.studentName,
+        terminal: state.terminal,
+        onboardingDone: state.onboardingDone,
+        progress: state.progress,
+        points: state.points,
+        streak: state.streak,
+        lastStudyDate: state.lastStudyDate,
         completedExercises: Array.from(state.completedExercises),
+        sessions: state.sessions,
+        achievements: state.achievements,
+        mockExamResults: state.mockExamResults,
+        invitesSent: state.invitesSent,
+        lastSeenVersion: state.lastSeenVersion,
+        notificationsEnabled: state.notificationsEnabled,
+        notificationTime: state.notificationTime,
       }),
       onRehydrateStorage: () => (state) => {
         if (state) {
+          // Re-convert back to Set
           state.completedExercises = new Set(state.completedExercises as unknown as string[]);
           if (state.terminal && (!state.achievements || state.achievements.length === 0)) {
             state.achievements = getAchievementsForTerminal(state.terminal);

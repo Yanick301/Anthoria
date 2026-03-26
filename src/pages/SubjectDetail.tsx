@@ -260,7 +260,11 @@ export default function SubjectDetail() {
                    <Info className="h-4 w-4" /> Conseil de révision
                 </h4>
                 <p className="text-[10px] text-muted-foreground leading-relaxed">
-                   Concentrez-vous sur les chapitres de Mobilisation des ressources le matin, quand votre cerveau est le plus frais pour mémoriser les formules de débits.
+                   {id === 'mathematiques' || id === 'sciences-physiques' || id === 'chimie' 
+                     ? "Privilégiez la résolution d'exercices pratiques et de calculs l'après-midi pour bien ancrer les mécanismes."
+                     : id === 'biologie' || id === 'philosophie' || id === 'histoire' || id === 'geographie'
+                     ? "La mémorisation des concepts et schémas clés est plus efficace tôt le matin."
+                     : "Révisez régulièrement de petits blocs de 20 minutes pour maintenir une progression constante."}
                 </p>
              </div>
           </TabsContent>

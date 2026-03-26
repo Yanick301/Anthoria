@@ -27,13 +27,19 @@ const BADGES_BY_SERIE: Record<TerminalSerie, Omit<Achievement, 'unlocked' | 'unl
     ...BASE_BADGES,
     { id: 'b-eco', title: 'Économiste', description: '100% d\'Économie.', icon: '📈', points: 100, requirement: 'subject:economie:100' },
     { id: 'b-circuit', title: 'Circuit Économique', description: 'Maîtrise du circuit économique.', icon: '🔄', points: 80, requirement: 'subject:economie:70' },
-    { id: 'b-hg', title: 'Historien-Géographe', description: 'Histoire-Géo complétée.', icon: '🌍', points: 100, requirement: 'subject:histoire-geo:100' },
+    { id: 'b-hg', title: 'Historien-Géographe', description: 'Histoire-Géo complétée.', icon: '🌍', points: 100, requirement: 'subject:histoire:80,subject:geographie:80' },
   ],
   C: [
     ...BASE_BADGES,
-    { id: 'c-maths', title: 'Mathématicien', description: '100% de Mathématiques.', icon: '📐', points: 120, requirement: 'subject:math:100' },
-    { id: 'c-sciences', title: 'Scientifique', description: 'Physique, Chimie et SVT à 80%.', icon: '⚗️', points: 150, requirement: 'subject:physics:80,subject:chemistry:80,subject:biology:80' },
+    { id: 'c-maths', title: 'Mathématicien', description: '100% de Mathématiques.', icon: '📐', points: 120, requirement: 'subject:mathematiques:100' },
+    { id: 'c-sciences', title: 'Scientifique', description: 'Physique, Chimie et SVT à 80%.', icon: '⚗️', points: 150, requirement: 'subject:sciences-physiques:80,subject:chimie:80,subject:biologie:80' },
     { id: 'c-derivee', title: 'Maître des Dérivées', description: '20 exercices de calcul réussi.', icon: '∫', points: 80, requirement: 'type:Calcul:20' },
+  ],
+  D: [
+    ...BASE_BADGES,
+    { id: 'd-svt', title: 'Expert en Biologie', description: '100% de SVT.', icon: '🧬', points: 120, requirement: 'subject:biologie:100' },
+    { id: 'd-pct', title: 'As de la PCT', description: 'Physique-Chimie à 80%.', icon: '🧪', points: 150, requirement: 'subject:sciences-physiques:80,subject:chimie:80' },
+    { id: 'd-labo', title: 'Génie du Labo', description: '20 exercices de schémas terminés.', icon: '🔬', points: 80, requirement: 'type:Schéma:20' },
   ],
 };
 

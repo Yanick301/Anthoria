@@ -332,9 +332,9 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
       ? bPlans
       : terminal === 'A'
       ? aPlans
-      : terminal === 'D'
-      ? dPlans
-      : cPlans;
+      : terminal === 'C'
+      ? cPlans
+      : eaPlans;
 
   return plans[weekIndex % plans.length];
 }
