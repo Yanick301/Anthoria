@@ -32,6 +32,17 @@ const SERIES_MAPPING: Record<TerminalSerie, string[]> = {
     'anglais',
     'philosophie',
   ],
+  'D': [
+    'mathematiques',
+    'sciences-physiques',
+    'chimie',
+    'biologie',
+    'francais',
+    'anglais',
+    'philosophie',
+    'histoire',
+    'geographie',
+  ],
   'EA': [
     'mobilisation-eau',
     'traitement-eau',

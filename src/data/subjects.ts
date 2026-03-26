@@ -571,219 +571,278 @@ Contenu obligatoire :
   },
   {
     id: 'sciences-physiques',
-    name: 'Sciences Physiques Appliquées',
+    name: 'Sciences Physiques',
     shortName: 'Physique',
     icon: '⚡',
     color: '#7C3AED',
     gradient: 'from-purple-700 to-purple-500',
-    description: 'Mécanique des fluides, électricité, thermodynamique appliquées au génie sanitaire.',
+    description: 'Mécanique, Électricité, Radioactivité, Ondes et Optique...',
     totalExercises: 20,
     chapters: [
       {
-        id: 'mecanique-fluides',
-        title: 'Mécanique des Fluides',
-        content: `La mécanique des fluides étudie le comportement des fluides (liquides et gaz) au repos (hydrostatique) et en mouvement (hydrodynamique).
+        id: 'physique-mecanique',
+        title: 'Mécanique de Newton',
+        content: `**I. LES LOIS DE NEWTON**
+1. **1ère Loi (Inercie)** : Un corps reste immobile ou en MRU si la somme des forces est nulle.
+2. **2ème Loi (PFD)** : ΣF = m.a (La somme des forces extérieures est égale au produit de la masse par l’accélération).
+3. **3ème Loi (Action-Réaction)** : F_A/B = -F_B/A.
 
-**HYDROSTATIQUE :**
+**II. MOUVEMENT DANS UN CHAMP DE PESANTEUR**
+Un projectile lancé avec une vitesse initiale v0 suit une trajectoire parabolique (en négligeant l'air).
+- Équations horaires : x(t) = (v0.cosα).t ; y(t) = -1/2.g.t² + (v0.sinα).t + h.
+- Portée : distance horizontale maximale.
+- Flèche : hauteur maximale atteinte.
 
-**Pression hydrostatique :**
-P = ρ × g × h
-Où ρ = 1000 kg/m³ (eau), g = 9,81 m/s², h = profondeur (m)
-1 bar = 10⁵ Pa = 10,2 m CE
+**III. MOUVEMENT DES SATELLITES ET PLANÈTES**
+Loi de gravitation universelle : F = G.(m.M)/r².
+- Pour un mouvement circulaire uniforme : v = √(G.M/r) et T = 2π√(r³/G.M).
+- 3ème Loi de Kepler : T²/r³ = constante.
 
-**Poussée d'Archimède :**
-F = ρ × g × V
-Où V = volume immergé du corps
-
-**Force de pression sur surface plane :**
-F = ρ × g × hG × A
-Où hG = profondeur du centre de gravité de la surface, A = aire
-
-**HYDRODYNAMIQUE :**
-
-**Équation de continuité :**
-Q = A₁V₁ = A₂V₂ = constante
-
-**Théorème de Bernoulli :**
-P₁ + ½ρV₁² + ρgz₁ = P₂ + ½ρV₂² + ρgz₂
-
-**Venturi (mesure de débit) :**
-Q = Cd × A₂ × √(2g × ΔH / (1 - (A₂/A₁)²))
-
-**Déversoir rectangulaire :**
-Q = (2/3) × Cd × L × √(2g) × h^(3/2)
-Cd ≈ 0,63 pour déversoir à mince paroi
-
-**Viscosité :**
-- Dynamique µ (Pa.s) = 10⁻³ Pa.s pour l'eau à 20°C
-- Cinématique ν = µ/ρ = 10⁻⁶ m²/s`,
+**IV. SYSTÈMES OSCILLANTS (Pendules)**
+- Pendule élastique : Période propre T0 = 2π√(m/k).
+- Pendule simple : Période propre T0 = 2π√(l/g).`,
         examples: [
-          'Pression au fond d\'un réservoir de 5m de hauteur : P = 1000×9,81×5 = 49 050 Pa ≈ 0,5 bar',
-          'Diamètre Venturi : D₁=100mm, D₂=50mm, ΔH=2m → Q = Cd×A₂×√(2g×ΔH/((D₁/D₂)⁴-1)) = 3,5 L/s',
-          'Déversoir L=0,5m, H=0,3m : Q = 0,667×0,63×0,5×√(2×9,81)×0,3^1,5 = 19,5 L/s'
+          'Calcul de la trajectoire d\'un ballon de football (projectile)',
+          'Vitesse d\'un satellite géostationnaire (altitude ≈ 36 000 km)',
+          'Étude d\'un solide sur un plan incliné avec frottements'
         ],
         keyPoints: [
-          'Conditions d\'application Bernoulli : fluide parfait, incompressible, écoulement permanent',
-          'Perte de charge singulière : ΔHs = ξ × V²/(2g), ξ = coefficient local',
-          'Coup de bélier : problème majeur en hydraulique, protéger par anti-bélier',
-          'Similitude hydraulique : modèle réduit, critère de Froude Fr = V/√(gL)'
+          'Vecteur accélération a = dv/dt = d²OG/dt²',
+          'Le travail d\'une force : W = F.AB.cosα',
+          'Énergie mécanique Em = Ec + Ep = constante (si forces conservatives)',
+          'Théorème de l\'énergie cinétique : ΔEc = ΣW(F)'
+        ]
+      },
+      {
+        id: 'physique-electricite',
+        title: 'Électricité (RC, RL, RLC)',
+        content: `**I. DIPÔLE RC (Condensateur)**
+- Charge : uC(t) = E(1 - e^(-t/τ)) avec τ = RC (constante de temps).
+- Décharge : uC(t) = E.e^(-t/τ).
+- Énergie emmagasinée : We = 1/2.C.Uc².
+
+**II. DIPÔLE RL (Bobine)**
+- Établissement du courant : i(t) = (E/R)(1 - e^(-t/τ)) avec τ = L/R.
+- Tension bobine : uL = L.di/dt + r.i.
+- Énergie magnétique : Wm = 1/2.L.i².
+
+**III. OSCILLATIONS DANS UN CIRCUIT RLC**
+- Circuit LC (idéal) : Oscillations sinusoïdales de période T0 = 2π√(LC).
+- Circuit RLC (réel) : Oscillations amorties (régime pseudo-périodique, apériodique ou critique selon la résistance R).
+
+**IV. RÉSONANCE ÉLECTRIQUE**
+Dans un circuit RLC série en courant alternatif, l'intensité est maximale à la fréquence de résonance f0 = 1 / (2π√(LC)).`,
+        examples: [
+          'Flash d\'appareil photo (décharge rapide d\'un condensateur)',
+          'Retard à l\'allumage d\'une lampe (effet d\'une bobine)',
+          'Accord d\'un récepteur radio sur une fréquence précise'
+        ],
+        keyPoints: [
+          'Loi d\'Ohm : u = R.i',
+          'Relation charge-tension : q = C.uC',
+          'Impédance Z (en Ohms Ω)',
+          'τ : Temps nécessaire pour atteindre 63% de la valeur finale'
+        ]
+      },
+      {
+        id: 'physique-nucleaire',
+        title: 'Physique Nucléaire',
+        content: `**I. STRUCTURE DU NOYAU**
+Composé de Z protons et N neutrons (nucléons A = Z + N). Noté ^A_Z X.
+
+**II. RADIOACTIVITÉ (Désintégration)**
+Processus aléatoire et spontané :
+- **Alpha (α)** : Émission d'un noyau d'Hélium (^4_2 He).
+- **Bêta moins (β-)** : Émission d'un électron (un neutron devient proton).
+- **Bêta plus (β+)** : Émission d'un positon (un proton devient neutron).
+- **Gamma (γ)** : Émission d'une onde électromagnétique (désexcitation).
+
+**III. LOI DE DÉCROISSANCE**
+N(t) = N0.e^(-λt).
+- Demi-vie (T1/2) : Temps au bout duquel la moitié des noyaux se sont désintégrés. T1/2 = ln2 / λ.
+
+**IV. ÉNERGIE NUCLÉAIRE**
+Défaut de masse : Δm = [Z.mp + (A-Z).mn] - M_noyau.
+Énergie de liaison : El = Δm.c².`,
+        examples: [
+          'Datation au Carbone 14 (T1/2 = 5730 ans)',
+          'Fission nucléaire dans les centrales (Uranium 235)',
+          'Fusion nucléaire dans le Soleil (Hydrogène -> Hélium)'
+        ],
+        keyPoints: [
+          'Lois de conservation de Soddy (A et Z)',
+          'L\'activité A(t) = -dN/dt = λ.N(t) s\'exprime en Becquerels (Bq)',
+          'Stabilité des noyaux (vallée de stabilité)',
+          'Équivalence masse-énergie d\'Einstein (E=mc²)'
+        ]
+      },
+      {
+        id: 'physique-optique',
+        title: 'Ondes et Optique',
+        content: `**I. ONDES MÉCANIQUES PROGRESSIVES**
+Propagation d'une perturbation sans transport de matière mais avec transport d'énergie.
+- Célérité v = d / Δt. Retard τ = SM / v.
+- Onde périodique : λ = v.T = v / f.
+
+**II. DIFFRACTION ET INTERFÉRENCES**
+1. **Diffraction** : Phénomène observé lorsqu'une onde rencontre un obstacle ou une fente de petite taille. Angle de diffraction θ = λ / a.
+2. **Interférences** : Superposition de deux ondes cohérentes.
+   - Constructives : différence de marche δ = k.λ.
+   - Destructives : δ = (k + 1/2).λ.
+
+**III. MODÈLE CORPUSCULAIRE DE LA LUMIÈRE**
+La lumière est composée de photons d'énergie E = h.f = h.c / λ. (h = constante de Planck).
+
+**IV. EFFET PHOTOÉLECTRIQUE**
+Extraction d'électrons d'un métal sous l'effet d'un rayonnement lumineux de fréquence suffisante.`,
+        examples: [
+          'Mesure de l\'épaisseur d\'un cheveu par diffraction laser',
+          'Couleurs irisées sur une bulle de savon (interférences)',
+          'Fonctionnement des panneaux photovoltaïques (effet photoélectrique)'
+        ],
+        keyPoints: [
+          'La lumière a un caractère dual : onde et particule',
+          'L\'interfrange i = λ.D / b',
+          'Ondes longitudinales vs transversales',
+          'Spectre électromagnétique (Visible : 400nm - 800nm)'
         ]
       }
     ]
   },
   {
     id: 'mathematiques',
-    name: 'Mathématiques Appliquées',
-    shortName: 'Mathématiques',
+    name: 'Mathématiques',
+    shortName: 'Maths',
     icon: '📐',
     color: '#EA580C',
     gradient: 'from-orange-600 to-orange-400',
-    description: 'Algèbre, analyse, statistiques, probabilités et géométrie appliquées au génie sanitaire.',
+    description: 'Analyse, Algèbre, Géométrie, Organiser et Gérer des données...',
     totalExercises: 19,
     chapters: [
       {
-        id: 'algebre',
-        title: 'Algèbre et Équations',
-        content: `L'algèbre est fondamentale pour résoudre les problèmes de dimensionnement hydraulique, de calcul de débits et de doses de traitement.
-
-**Équations du premier degré :**
-ax + b = c → x = (c - b)/a
-
-**Équations du second degré :**
-ax² + bx + c = 0
-Discriminant : Δ = b² - 4ac
-Solutions : x = (-b ± √Δ) / (2a)
-
-**Systèmes d'équations :**
-Méthodes : substitution, addition, Cramer (déterminants)
-
-**Logarithmes et exponentielles :**
-- log₁₀(x) : base 10, noté log
-- ln(x) : base e = 2,718
-- log(a×b) = log(a) + log(b)
-- log(aⁿ) = n × log(a)
-
-**Application en désinfection :**
-Abattement bactérien : log₁₀(N₀/N) = nombre de log de réduction
-4 log = 99,99% de destruction
-
-**Règle de 3 et proportionnalité :**
-Si Q₁ → C₁, alors Q₂ → C₂ = C₁ × Q₂/Q₁
-
-**Pourcentages :**
-% = (partie/tout) × 100
-Variation % = (nouvelle-ancienne)/ancienne × 100`,
-        examples: [
-          'Dose de chlore : 2 mg/L dans 50 m³ → m = 2×10⁻³ × 50×10³ = 100 g de chlore actif',
-          'Dilution : C₁V₁ = C₂V₂ → V₁ = C₂V₂/C₁ = (50×1000)/120 = 417 mL de solution mère',
-          'Augmentation de population : P(t) = P₀ × (1+r)^t → P(10) = 5000 × 1,02^10 = 6095 hab'
-        ],
-        keyPoints: [
-          'Notation scientifique : 2,5 × 10⁻³ = 0,0025 = 2,5 mg/L si unité mg/L',
-          'Conversions : 1 bar = 10⁵ Pa = 10,2 m CE = 100 kPa',
-          'Facteur d\'émission : m³/j → L/s : diviser par 86,4',
-          'Formule de calcul de pente : i = ΔH/L (sans unité, ou en m/m ou en pour mille ‰)'
-        ]
-      },
-      {
         id: 'math-complexes',
         title: 'Nombres Complexes',
-        content: `Les nombres complexes sont une extension des nombres réels, indispensables en physique et en analyse.
+        content: `**I. FORME ALGÉBRIQUE**
+Un nombre complexe s'écrit z = a + ib, où a et b sont des réels et i² = -1.
+- Re(z) = a (partie réelle) ; Im(z) = b (partie imaginaire).
+- Conjugué : z̄ = a - ib.
 
-**Forme Algébrique**
-z = a + ib, avec i² = -1. a est la partie réelle, b la partie imaginaire.
+**II. MODULE ET ARGUMENT**
+- Module |z| = √(a² + b²) = √(z.z̄).
+- Argument θ = arg(z) tel que cosθ = a/|z| et sinθ = b/|z|.
 
-**Forme Trigonométrique et Exponentielle**
-z = r(cos θ + i sin θ) = re^(iθ). r est le module |z| = √(a² + b²), θ est l'argument.
+**III. FORME TRIGONOMÉTRIQUE ET EXPONENTIELLE**
+- z = |z|(cosθ + i sinθ)
+- z = |z|.e^(iθ).
+Formules d'Euler : cosθ = (e^iθ + e^-iθ)/2 ; sinθ = (e^iθ - e^-iθ)/2i.
 
-**Opérations**
-Addition, multiplication, conjugaison. Équations du second degré à coefficients réels.`,
+**IV. RÉSOLUTION D'ÉQUATIONS**
+Équation az² + bz + c = 0 (a, b, c réels).
+- Δ = b² - 4ac. Si Δ < 0, deux solutions complexes conjuguées : z = (-b ± i√|Δ|)/2a.`,
         examples: [
-          'Calcul du module de z = 3 + 4i → |z| = 5',
-          'Utilisation des complexes en électricité (impédances)',
-          'Résolution de z² + 1 = 0 → z = i ou z = -i'
+          'Calcul du module et de l\'argument de z = 1 + i',
+          'Utilisation de la forme exponentielle pour linéariser cos²x',
+          'Résolution de z² - 2z + 5 = 0'
         ],
         keyPoints: [
-          'i² = -1',
-          'Module : distance à l\'origine',
-          'Argument : angle avec l\'axe réel',
-          'Formule d\'Euler : e^(iθ) = cos θ + i sin θ'
+          'Calculs avec i (i³=-i, i⁴=1)',
+          'Propriétés du module : |z.z\'| = |z|.|z\'| et |z/z\'| = |z|/|z\'|',
+          'Formule de Moivre : (cosθ + i sinθ)ⁿ = cos(nθ) + i sin(nθ)',
+          'Interprétation géométrique : affixe d\'un point ou d\'un vecteur'
         ]
       },
       {
-        id: 'math-analyse',
-        title: 'Analyse : Limites et Intégrales',
-        content: `L'analyse étudie le comportement des fonctions.
+        id: 'math-fonctions',
+        title: 'Analyse de Fonctions',
+        content: `**I. LIMITES ET CONTINUITÉ**
+- Limite en un point, à l'infini. Limites usuelles (ln, exp).
+- Continuité : f est continue en a si lim (x->a) f(x) = f(a).
+- Théorème des Valeurs Intermédiaires (TVI) : existence de solutions à f(x) = k.
 
-**Limites et Continuité**
-Étude aux bornes du domaine de définition. Théorème des valeurs intermédiaires.
+**II. DÉRIVATION ET ÉTUDE DE VARIATIONS**
+- Formules de dérivation (u.v, u/v, g∘f).
+- Relation signe de f'(x) / sens de variation de f.
+- Recherche d'asymptotes (horizontales, verticales, obliques).
 
-**Dérivation**
-Nombre dérivé, fonction dérivée, sens de variation et extrema.
+**III. FONCTIONS ln ET exp**
+- **Logarithme népérien** : ln(x). Définie sur ]0, +∞[. ln(1)=0 ; ln(e)=1. ln(a.b) = ln(a)+ln(b).
+- **Exponentielle** : exp(x) ou e^x. Définie sur R. Toujours strictement positive. e^a.e^b = e^(a+b).
 
-**Intégration**
-Primitive d'une fonction, calcul d'intégrales, aires sous la courbe.`,
+**IV. INTÉGRATION ET PRIMITIVES**
+- Recherche de primitives usuelles.
+- Intégrale ∫ de a à b de f(t)dt = [F(t)] de a à b = F(b) - F(a).
+- Calcul d'aires et intégration par parties.`,
         examples: [
-          'Calcul de la limite de 1/x en +infini → 0',
-          'Primitive de x² → (1/3)x³',
-          'Étude de la fonction exponentielle e^x'
+          'Étude complète de f(x) = (x-1).e^x',
+          'Calcul de l\'intégrale de ln(x) par parties',
+          'Utilisation du TVI pour montrer que e^x = x + 2 a une solution'
         ],
         keyPoints: [
-          'Dérivée de ln(x) = 1/x',
-          'Intégrale = Aire algébrique',
-          'Relation de Chasles : ∫f(x) dx de a à c = ∫ de a à b + ∫ de b à c',
-          'Asymptotes : verticales, horizontales ou obliques'
+          'Croissances comparées : lim e^x/x = +∞ et lim ln(x)/x = 0',
+          'Dérivée de f(u) = u\'.f\'(u)',
+          'L\'intégrale est une aire sous la courbe si f ≥ 0',
+          'Point d\'inflexion : là où f\'\' s\'annule en changeant de signe'
         ]
       },
       {
-        id: 'statistiques',
-        title: 'Statistiques et Probabilités',
-        content: `Les statistiques sont utilisées pour analyser les données de qualité d'eau, les débits fluviaux, les performances des stations de traitement.
+        id: 'math-suites',
+        title: 'Suites Numériques',
+        content: `**I. MODES DE GÉNÉRATION**
+- Formule explicite : un = f(n).
+- Récurrence : u(n+1) = f(un).
 
-**Statistiques descriptives :**
+**II. SUITES ARITHMÉTIQUES ET GÉOMÉTRIQUES**
+- **Arithmétique** : u(n+1) = un + r. un = u0 + n.r. Somme S = (nb termes)×(premier + dernier)/2.
+- **Géométrique** : u(n+1) = un × q. un = u0 × qⁿ. Somme S = u0.(1 - q^n)/(1 - q).
 
-**Moyenne arithmétique :**
-x̄ = (Σxᵢ) / n
+**III. CONVERGENCE ET LIMITES**
+- Suite croissante et majorée → convergente.
+- Limite d'une suite géométrique selon la valeur de q (|q| < 1 → lim = 0).
 
-**Médiane :** valeur centrale (50ème percentile)
-
-**Mode :** valeur la plus fréquente
-
-**Variance :**
-σ² = Σ(xᵢ - x̄)² / n
-
-**Écart-type :**
-σ = √(variance) - mesure de dispersion
-
-**Coefficient de variation :**
-CV = σ/x̄ × 100%
-
-**Représentations graphiques :**
-- Histogramme : distribution de fréquences
-- Courbe des fréquences cumulées
-- Boxplot (boîte à moustaches)
-- Diagramme de Pareto
-
-**Applications hydrologiques :**
-- Distribution de Gumbel (crues et étiages)
-- Période de retour T = 1/p (p = probabilité dépassement)
-- Crue centennale : T = 100 ans
-- Analyse en fréquence des débits (hydrologie statistique)
-
-**Corrélation et régression :**
-- Coefficient de Pearson r (-1 à 1)
-- Droite de régression y = ax + b
-- R² = coefficient de détermination`,
+**IV. RAISONNEMENT PAR RÉCURRENCE**
+1. Initialisation (P0 est vraie).
+2. Hérédité (Si Pk est vraie, alors P(k+1) est vraie).
+3. Conclusion.`,
         examples: [
-          'Débits mesurés (m³/s) : 2,1 ; 3,5 ; 1,8 ; 4,2 ; 2,7 → x̄ = 2,86, σ = 0,89, CV = 31%',
-          'Turbidité sur 30 jours : médiane = 8 NTU, mois pluvieux → Q90 = 25 NTU pour dimensionner',
-          'Corrélation turbidité/pluviométrie : r = 0,85 → forte corrélation positive'
+          'Calcul du terme général d\'une suite définie par u(n+1) = 2.un + 3',
+          'Somme des 100 premiers entiers naturels',
+          'Étude de la convergence d\'une suite bornée'
         ],
         keyPoints: [
-          'Loi de Poisson : modélise les pannes aléatoires dans le temps',
-          'Probabilité de Weibull : P(X≤x) = 1 - e^(-x/λ)^k',
-          'Test de χ² (chi-carré) : teste l\'adéquation à une loi théorique',
-          'Intervalle de confiance : x̄ ± 1,96 × σ/√n pour 95% de confiance'
+          'u_n+1 - u_n > 0 means suite is increasing',
+          'Une suite divergente peut tendre vers l\'infini ou n\'avoir aucune limite',
+          'Théorème des gendarmes pour les suites',
+          'Toute suite convergente est bornée'
+        ]
+      },
+      {
+        id: 'math-probabilites',
+        title: 'Probabilités et Dénombrement',
+        content: `**I. ANALYSE COMBINATOIRE**
+- Factorielle n! = n × (n-1) × ... × 1.
+- Permutations, Arrangements, Combinaisons (C_n^k).
+
+**II. ESPACES PROBABILISÉS**
+- Univers Ω, Événements A, B. P(A∪B) = P(A) + P(B) - P(A∩B).
+- Équiprobabilité : P(A) = (nb cas favorables) / (nb cas possibles).
+
+**III. PROBABILITÉS CONDITIONNELLES**
+- P_A(B) = P(A∩B) / P(A).
+- Formule des probabilités totales. Événements indépendants si P(A∩B) = P(A).P(B).
+
+**IV. VARIABLES ALÉATOIRES**
+- Loi de probabilité, Espérance E(X), Variance V(X), Écart-type.
+- **Loi Binomiale** B(n, p) : Répétition de n épreuves de Bernoulli indépendantes.`,
+        examples: [
+          'Calcul du nombre de tirages possibles au Loto',
+          'Arbre de probabilités pour un test médical (positif/négatif)',
+          'Espérance de gain à un jeu de hasard'
+        ],
+        keyPoints: [
+          'La somme des probabilités est toujours égale à 1',
+          'Événement contraire P(A\') = 1 - P(A)',
+          'Intervalle de fluctuation et échantillonnage',
+          'Loi faible des grands nombres'
         ]
       }
     ]
@@ -1915,26 +1974,34 @@ Valorisation des richesses naturelles et culturelles pour le développement.
       {
         id: 'chimie-acides-bases',
         title: 'Acides et Bases',
-        content: `L'étude des acides et des bases est fondamentale pour comprendre la chimie des solutions et le traitement des eaux.
+        content: `**I. COUPLES ACIDE-BASE**
+Un acide de Brönsted est une espèce capable de céder un proton H+. Une base est capable d'en capter un.
+Couple Acide/Base : AH / A- tel que AH = A- + H+.
 
-**Définitions**
-Acide de Brönsted : espèce capable de céder un proton H+. Base de Brönsted : espèce capable de capter un proton H+. Couple acide/base A/B : A = B + H+.
+**II. LE pH DES SOLUTIONS AQUEUSES**
+Le pH (Potentiel Hydrogène) définit l'acidité : pH = -log[H3O+].
+- Solution acide : pH < 7
+- Solution neutre : pH = 7
+- Solution basique : pH > 7
+Autoprotolyse de l'eau : 2H2O <=> H3O+ + OH-, avec Ke = [H3O+][OH-] = 10^-14 à 25°C.
 
-**pH et pKa**
-Le pH mesure l'acidité d'une solution : pH = -log[H3O+]. Le pKa caractérise la force d'un acide : pKa = -log Ka. Plus le pKa est petit, plus l'acide est fort.
+**III. FORCE DES ACIDES ET DES BASES**
+- **Acide/Base forte** : Réaction totale avec l'eau. pH = -log C (pour un acide fort).
+- **Acide/Base faible** : Réaction limitée, caractérisée par la constante d'acidité Ka. pKa = -log Ka.
+Plus le pKa est faible, plus l'acide est fort.
 
-**Réactions Acide-Base**
-La réaction entre un acide fort et une base forte est totale. Les solutions tampons maintiennent un pH quasi constant malgré l'ajout d'acide ou de base.`,
+**IV. DOSAGE ACIDE-BASE**
+Le but est de déterminer la concentration inconnue d'une solution. À l'équivalence, les réactifs ont été introduits dans les proportions stœchiométriques : n(acide) = n(base).`,
         examples: [
-          'Calcul du pH d\'une solution de HCl 0,1 M → pH = 1',
-          'Utilisation de la chaux pour neutraliser l\'acidité de l\'eau',
-          'Le système tampon bicarbonate dans le sang'
+          'Calcul du pH d\'une solution d\'acide chlorhydrique (HCl)',
+          'Utilisation du bleu de bromothymol (BBT) comme indicateur coloré',
+          'Le système tampon bicarbonate dans le sang humain'
         ],
         keyPoints: [
-          'pH : Indice d\'hydrogène',
-          'Autoprotolyse de l\'eau : 2H2O = H3O+ + OH-',
-          'Ke : Produit ionique de l\'eau (10^-14 à 25°C)',
-          'Solution tampon : pH stable'
+          'Un acide fort a un pKa < 0',
+          'L\'équivalence se repère par un saut de pH ou un changement de couleur',
+          'Une solution tampon résiste aux variations de pH',
+          'pKa + pKb = 14'
         ]
       }
     ]
@@ -1952,110 +2019,128 @@ La réaction entre un acide fort et une base forte est totale. Les solutions tam
       {
         id: 'svt-genetique',
         title: 'Génétique et Hérédité',
-        content: `La génétique étudie la transmission des caractères héréditaires et le fonctionnement des gènes.
+        content: `**I. LES BASES DE LA GÉNÉTIQUE**
+L'ADN (Acide Désoxyribonucléique) est le support universel de l'information génétique. Sa structure en double hélice (modèle de Watson et Crick) permet sa réplication semi-conservative.
 
-**L'ADN et l'Information Génétique**
-L'ADN est le support de l'hérédité. Sa structure en double hélice permet la duplication et la transmission de l'information. Un gène est un fragment d'ADN codant pour une protéine.
+**II. LA MÉIOSE ET LE BRASSAGE GÉNÉTIQUE**
+La méiose est une succession de deux divisions cellulaires précédées d'une seule réplication. Elle produit 4 cellules haploïdes à partir d'une cellule diploïde.
 
-**La Mutation**
-Une mutation est une modification de la séquence d'ADN. Elle peut être silencieuse, bénéfique ou néfaste. Elle est le moteur de l'évolution.
+1. **Brassage Intrachromosomique (Crossing-over)** : En Prophase I, les chromosomes homologues s'apparient (bivalents) et échangent des fragments de chromatides au niveau des chiasmas.
+2. **Brassage Interchromosomique** : En Métaphase I, la disposition aléatoire des chromosomes homologues de part et d'autre du plan équatorial assure une répartition variée dans les cellules filles.
 
-**Hérédité humaine**
-Transmission des caractères dominants et récessifs. Chromosomes sexuels (X, Y) et maladies liées au sexe.`,
+**III. LES LOIS DE MENDEL ET L'HÉRÉDITÉ HUMAINE**
+- **Monohybridisme** : Étude de la transmission d'un seul caractère.
+- **Dihybridisme** : Étude de deux caractères (indépendants ou liés).
+- **Hérédité liée au sexe** : Caractères portés par les gonosomes (chromosomes X ou Y), comme l'hémophilie ou le daltonisme.
+
+**IV. LES MUTATIONS**
+Modifications accidentelles de la séquence de nucléotides (substitution, délétion, insertion). Elles créent de nouveaux allèles et sont à l'origine de la biodiversité.`,
         examples: [
-          'La transmission de la couleur des yeux',
-          'La drépanocytose comme exemple de mutation génétique',
-          'Le clonage thérapeutique'
+          'Calcul des probabilités de génotypes via l\'échiquier de croisement',
+          'La drépanocytose (HbS) : mutation ponctuelle par substitution',
+          'Étude d\'un arbre généalogique pour une maladie récessive autosomale'
         ],
         keyPoints: [
-          'Allèle : Version d\'un gène',
-          'Génotype : Ensemble des gènes',
-          'Phénotype : Caractères observables',
-          'Chromosomes : Supports de l\'ADN'
+          'Allèle : une des formes possibles d\'un gène occupant un locus précis',
+          'Homozygote (AA ou aa) vs Hétérozygote (Aa)',
+          'Dominance, récessivité et codominance',
+          'La méiose réduit le nombre de chromosomes de moitié (2n -> n)'
         ]
       },
       {
         id: 'svt-reproduction',
         title: 'Physiologie de la Reproduction',
-        content: `La reproduction humaine assure la continuité de l'espèce à travers des mécanismes hormonaux complexes.
+        content: `**I. GAMÉTOGÉNÈSE ET APPAREILS REPRODUCTEURS**
+- **Spermatogénèse** : Processus continu dans les tubes séminifères (de la puberté à la fin de vie). Régulée par la testostérone produite par les cellules de Leydig.
+- **Ovogénèse** : Processus cyclique et discontinu commencé in utero, s'arrêtant à la ménopause.
 
-**Appareils Reproducteurs**
-Anatomie et rôles des testicules (spermatogenèse, testostérone) et des ovaires (ovogenèse, œstrogènes, progestérone).
+**II. RÉGULATION HORMONALE CHEZ LA FEMME**
+Le cycle féminin (28 jours en moyenne) est contrôlé par l'axe hypothalamo-hypophysaire :
+1. **Phase Folliculaire** : La FSH stimule la croissance des follicules qui sécrètent des œstrogènes.
+2. **Ovulation** : Un pic de LH (déclenché par un rétrocontrôle positif des œstrogènes) provoque la rupture du follicule.
+3. **Phase Lutéale** : Le corps jaune sécrète progestérone et œstrogènes, préparant l'endomètre (nidation).
 
-**Cycles Sexuels chez la Femme**
-Cycle ovarien (Phase folliculaire, ovulation, phase lutéale) et cycle utérin (menstruations, phase proliférative, phase sécrétoire). Régulation par le complexe hypothalamo-hypophysaire (GnRH, LH, FSH).
+**III. RÉTROCONTRÔLES**
+- **Négatif** : La majorité du temps, les hormones ovariennes freinent l'hypothalamus pour stabiliser les taux.
+- **Positif** : Juste avant l'ovulation, une forte dose d'œstrogènes stimule massivement la libération de LH.
 
-**De la Fécondation à la Naissance**
-Rencontre des gamètes dans les trompes, nidation dans l'utérus, développement embryonnaire et foetal. Rôle du placenta.
-
-**Maîtrise de la Procréation**
-Contraception (pilules, préservatifs, stérilets) et Procréation Médicalement Assistée (PMA).`,
+**IV. FÉCONDATION ET DÉVELOPPEMENT**
+La fécondation a lieu dans le tiers supérieur de la trompe. L'œuf devient embryon, puis foetus après 2 mois. Le placenta assure les échanges et sécrète l'HCG pour maintenir le corps jaune au début.`,
         examples: [
-          'Le pic de LH déclenchant l\'ovulation au 14ème jour',
-          'L\'action de la testostérone sur les caractères sexuels secondaires',
-          'Le rôle de l\'HCG dans le maintien du corps jaune'
+          'Analyse de courbes de température pour détecter l\'ovulation',
+          'Effets de la pilule contraceptive (maintien d\'un rétrocontrôle négatif constant)',
+          'La glaire cervicale : évolution au cours du cycle'
         ],
         keyPoints: [
-          'Gamétogenèse : Formation des gamètes',
-          'Rétrocontrôle : Régulation hormonale',
-          'Nidation : Fixation de l\'embryon',
-          'Placenta : Zone d\'échanges'
+          'GnRH : Hormone de libération (Hypothalamus)',
+          'LH et FSH : Gonadostimulines (Hypophyse)',
+          'L\'ovulation se produit environ 14 jours avant les prochaines règles',
+          'Le corps jaune dégénère s\'il n\'y a pas de fécondation, provoquant les règles'
         ]
       },
       {
         id: 'svt-nerveux',
         title: 'Le Système Nerveux',
-        content: `La communication nerveuse permet la coordination des fonctions de l'organisme et la relation avec l'environnement.
+        content: `**I. ORGANISATION DU SYSTÈME NERVEUX**
+- **Système Nerveux Central (SNC)** : Encéphale (cerveau, cervelet, tronc cérébral) et Moelle épinière.
+- **Système Nerveux Périphérique (SNP)** : Nerfs crâniens et rachidiens.
 
-**Le Message Nerveux**
-Nature électrique (potentiel de repos, potentiel d'action) et transmission chimique au niveau des synapses (neurotransmetteurs).
+**II. LE MESSAGE NERVEUX**
+1. **Nature Électrique** :
+   - **Potentiel de Repos** : Différence de potentiel (-70mV) due à une répartition inégale des ions (Na+, K+).
+   - **Potentiel d'Action (PA)** : Inversion brusque du potentiel (dépolarisation, repolarisation, hyperpolarisation). Obéit à la loi du "tout ou rien".
+2. **Transmission Synaptique** : Arrivée du PA -> Entrée de Ca2+ -> Libération de neurotransmetteurs (ex: acétylcholine) dans la fente -> Fixation sur récepteurs -> Naissance d'un nouveau message (PPS).
 
-**Le Réflexe Myotatique**
-Un exemple d'activité nerveuse involontaire. Arc réflexe : récepteur, nerf sensitif, centre nerveux (moelle épinière), nerf moteur, effecteur (muscle).
+**III. LE RÉFLEXE MYOTATIQUE**
+Contraction d'un muscle en réponse à son propre étirement.
+- **Circuit** : Récepteur (fuseau neuromusculaire) -> Fibre sensitive (IA) -> Moelle épinière (synapse unique) -> Motoneurone -> Muscle effecteur.
+- **Coordination** : Innervation réciproque (contraction de l\'agoniste et relâchement de l\'antagoniste via un interneurone inhibiteur).
 
-**Cerveau et Motricité**
-Aires motrices cérébrales et commande du mouvement volontaire. Plasticité cérébrale.
-
-**Perturbations du Système Nerveux**
-Effets des drogues et de la fatigue sur la transmission synaptique.`,
+**IV. MOTRICITÉ VOLONTAIRE ET PLASTICITÉ**
+Le mouvement volontaire est décidé dans l'aire motrice primaire du cortex. Les voies nerveuses sont croisées (l'hémisphère gauche commande la partie droite du corps).`,
         examples: [
-          'Le réflexe rotulien (coup sur le genou)',
-          'L\'action de la dopamine dans le circuit de la récompense',
-          'La transmission synaptique via l\'acétylcholine'
+          'Le réflexe achilléen (extension du pied)',
+          'Effet de la toxine botulique (bloque la libération d\'acétylcholine)',
+          'Sommation spatiale et temporelle des messages au niveau du neurone'
         ],
         keyPoints: [
-          'Neurone : Unité fonctionnelle',
-          'Synapse : Zone de contact',
-          'Potentiel d\'action : Signal nerveux',
-          'Moelle épinière : Centre des réflexes'
+          'Neurone : cellule excitable et conductrice',
+          'La gaine de myéline accélère la conduction (conduction saltatoire)',
+          'La synapse est unidirectionnelle',
+          'Plasticité cérébrale : capacité du cerveau à se réorganiser'
         ]
       },
       {
         id: 'svt-immunologie',
         title: 'Immunologie et Défense',
-        content: `Le système immunitaire protège l'organisme contre les agressions extérieures (microbes) et intérieures (cellules cancéreuses).
+        content: `**I. LES BARRIÈRES NATURELLES ET LE SOI**
+L'organisme distingue le **Soi** (ses propres molécules marquées par le CMH) du **Non-Soi** (antigènes étrangers).
 
-**Le Soi et le Non-Soi**
-Reconnaissance des marqueurs du CMH. Distinction entre les molécules appartenant à l'organisme et les molécules étrangères (antigènes).
+**II. L'IMMUNITÉ INNÉE (Réaction Inflammatoire)**
+Réponse rapide et non spécifique :
+1. **Symptômes** : Rougeur, chaleur, douleur, gonflement (oedème).
+2. **Mécanisme** : Vasodilatation et recrutement de phagocytes (macrophages, granulocytes).
+3. **Phagocytose** : Adhésion, ingestion, digestion, rejet des débris.
 
-**L'Immunité Innée**
-Réaction inflammatoire (douleur, rougeur, chaleur, gonflement). Phagocytose par les macrophages.
+**III. L'IMMUNITÉ ADAPTATIVE**
+Réponse lente mais spécifique et durable :
+- **Médiation Humorale (LB)** : Sélection des lymphocytes B -> Multiplication -> Différenciation en plasmocytes -> Sécrétion d'anticorps qui neutralisent l'antigène (complexe immun).
+- **Médiation Cellulaire (LTc)** : Lymphocytes T CD8 se différencient en LT cytotoxiques qui détruisent les cellules infectées par contact direct ("baiser de la mort").
+- **Le rôle pivot des LT4** : Ils sécrètent l'interleukine 2, indispensable à l'activation des LB et LT8.
 
-**L'Immunité Adaptative**
-Réponse humorale (lymphocytes B, anticorps) et réponse cellulaire (lymphocytes T cytotoxiques). Mémoire immunitaire.
-
-**Dysfonctionnements et Applications**
-Le SIDA (VIH), les allergies, les vaccins et les sérums.`,
+**IV. APPLICATIONS MÉDICALES**
+- **Vaccination** : Injection d'antigènes atténués pour créer une mémoire immunitaire.
+- **Sérothérapie** : Injection d'anticorps pour une protection immédiate.`,
         examples: [
-          'La production d\'anticorps après une vaccination',
-          'La réaction inflammatoire après une coupure',
-          'Le rôle des LT4 (chefs d\'orchestre de l\'immunité)'
+          'Le mode d\'action du VIH (destruction des LT4)',
+          'Test de détermination des groupes sanguins (agglutination)',
+          'Réaction allergique : libération d\'histamine par les mastocytes'
         ],
         keyPoints: [
-          'Antigène : Molécule étrangère',
-          'Anticorps : Protéine de défense',
-          'Vaccination : Prévention',
-          'Sérothérapie : Traitement curatif'
+          'Antigène : toute substance étrangère déclenchant une réponse',
+          'Anticorps : immunoglobulines spécifiques d\'un épitope',
+          'Mémoire immunitaire : permet une réponse plus rapide au 2ème contact',
+          'Le SIDA est une immunodéficience acquise'
         ]
       }
     ]

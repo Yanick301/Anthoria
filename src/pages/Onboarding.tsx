@@ -12,6 +12,7 @@ const TERMINAL_OPTIONS: { id: TerminalSerie; label: string; description: string 
   { id: 'A', label: 'Terminale A', description: 'Série littéraire et sciences humaines' },
   { id: 'B', label: 'Terminale B', description: 'Économie & gestion' },
   { id: 'C', label: 'Terminale C', description: 'Série scientifique' },
+  { id: 'D', label: 'Terminale D', description: 'Série scientifique SVT' },
   { id: 'EA', label: 'Terminale EA', description: 'Eau & Assainissement' },
 ];
 

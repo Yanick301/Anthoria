@@ -12,10 +12,11 @@ import { useNotifications } from '@/hooks/useNotifications';
 import { Switch } from '@/components/ui/switch';
 import { Bell, TestTube } from 'lucide-react';
 
-const SERIES: { value: 'A' | 'B' | 'C' | 'EA'; label: string }[] = [
+const SERIES: { value: TerminalSerie; label: string }[] = [
   { value: 'A', label: 'Série A (Littéraire)' },
   { value: 'B', label: 'Série B (Économie)' },
   { value: 'C', label: 'Série C (Scientifique)' },
+  { value: 'D', label: 'Série D (SVT)' },
   { value: 'EA', label: 'Série EA (Technique)' },
 ];
 
@@ -45,7 +46,7 @@ export default function Settings() {
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const handleChangeSerie = (t: 'A' | 'B' | 'C' | 'EA') => {
+  const handleChangeSerie = (t: TerminalSerie) => {
     setTerminal(t);
   };
 
@@ -224,7 +225,7 @@ export default function Settings() {
 
       <div className="mt-8 mb-4 text-center space-y-2">
         <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">
-          Althoria v1.2.0
+          Anthoria v1.2.0
         </p>
         <p className="text-[10px] text-muted-foreground/60 font-medium">
           Conçu et développé avec passion par <span className="text-primary/60 font-black">DeOs</span>

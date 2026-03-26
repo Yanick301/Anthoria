@@ -116,7 +116,7 @@ export interface StudySession {
   score: number;
 }
 
-export type TerminalSerie = 'A' | 'B' | 'C' | 'EA';
+export type TerminalSerie = 'A' | 'B' | 'C' | 'D' | 'EA';
 
 export interface AppState {
   // Profil apprenant
@@ -302,13 +302,26 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
   // Planning adapté pour Terminale C (scientifique)
   const cPlans: DayPlan[][] = [
     [
-      { day: 'Lundi', subjectIds: ['math'], activities: ['Analyse : limites & dérivées', 'Exercices type Bac'], exerciseCount: 14 },
-      { day: 'Mardi', subjectIds: ['physics'], activities: ['Mécanique / électricité', 'Problèmes corrigés'], exerciseCount: 12 },
-      { day: 'Mercredi', subjectIds: ['chemistry'], activities: ['Acides / bases, oxydoréduction', 'Exercices de calcul'], exerciseCount: 12 },
-      { day: 'Jeudi', subjectIds: ['biology'], activities: ['Génétique / physiologie', 'Schémas & QCM'], exerciseCount: 10 },
-      { day: 'Vendredi', subjectIds: ['french', 'english'], activities: ['Expression écrite', 'Compréhension'], exerciseCount: 8 },
-      { day: 'Samedi', subjectIds: ['math', 'physics'], activities: ['BAC Blanc scientifique complet'], exerciseCount: 35 },
+      { day: 'Lundi', subjectIds: ['mathematiques'], activities: ['Analyse : limites & dérivées', 'Exercices type Bac'], exerciseCount: 14 },
+      { day: 'Mardi', subjectIds: ['sciences-physiques'], activities: ['Mécanique / électricité', 'Problèmes corrigés'], exerciseCount: 12 },
+      { day: 'Mercredi', subjectIds: ['chimie'], activities: ['Acides / bases, oxydoréduction', 'Exercices de calcul'], exerciseCount: 12 },
+      { day: 'Jeudi', subjectIds: ['biologie'], activities: ['Génétique / physiologie', 'Schémas & QCM'], exerciseCount: 10 },
+      { day: 'Vendredi', subjectIds: ['francais', 'anglais'], activities: ['Expression écrite', 'Compréhension'], exerciseCount: 8 },
+      { day: 'Samedi', subjectIds: ['mathematiques', 'sciences-physiques'], activities: ['BAC Blanc scientifique complet'], exerciseCount: 35 },
       { day: 'Dimanche', subjectIds: [], activities: ['Révision ciblée des points faibles'], exerciseCount: 5 },
+    ],
+  ];
+
+  // Planning adapté pour Terminale D (scientifique - SVT)
+  const dPlans: DayPlan[][] = [
+    [
+      { day: 'Lundi', subjectIds: ['biologie'], activities: ['Génétique : brassages & méiose', 'Schémas de synthèse'], exerciseCount: 14 },
+      { day: 'Mardi', subjectIds: ['sciences-physiques'], activities: ['PCT : Mécanique Newtonienne', 'Exercices pratiques'], exerciseCount: 12 },
+      { day: 'Mercredi', subjectIds: ['mathematiques'], activities: ['Suites numériques & probabilités', 'Calculs'], exerciseCount: 12 },
+      { day: 'Jeudi', subjectIds: ['chimie'], activities: ['Acides/Bases & Saponification', 'TP théoriques'], exerciseCount: 12 },
+      { day: 'Vendredi', subjectIds: ['philosophie', 'histoire'], activities: ['Philosophie & Histoire-Géo', 'Rédaction'], exerciseCount: 10 },
+      { day: 'Samedi', subjectIds: ['biologie', 'sciences-physiques'], activities: ['BAC Blanc Série D - SVT/PCT'], exerciseCount: 35 },
+      { day: 'Dimanche', subjectIds: [], activities: ['Repos ou révision légère SVT'], exerciseCount: 5 },
     ],
   ];
 
@@ -319,6 +332,8 @@ export function getCurrentWeekPlan(terminal: TerminalSerie | null, weekIndex: nu
       ? bPlans
       : terminal === 'A'
       ? aPlans
+      : terminal === 'D'
+      ? dPlans
       : cPlans;
 
   return plans[weekIndex % plans.length];
