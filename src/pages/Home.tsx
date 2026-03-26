@@ -29,7 +29,7 @@ import { APP_CONSTANTS } from '@/lib/constants';
    const { studentName, points, streak, progress, lastStudyDate, terminal, achievements } = useAppStore();
    const level = calculateLevel(points);
    const xp = getXPProgress(points);
-   const recentAchievements = achievements.filter(a => a.unlocked).slice(-3).reverse();
+   const recentAchievements = (achievements || []).filter(a => a.unlocked).slice(-3).reverse();
   const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long' });
   const todayPlan = getCurrentWeekPlan(terminal, 0).find(
     (p) => p.day.toLowerCase() === today.toLowerCase()

@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/hooks/useAppStore';
 import { cn } from '@/lib/utils';
 
-const CURRENT_VERSION = '3.0.0';
+const CURRENT_VERSION = '1.0.5';
 
 type TourStep = {
   id: string;

@@ -28,17 +28,47 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 
 export default function Lesson() {
-  const { id, chapterIndex } = useParams<{ id: string, chapterIndex?: string }>();
+  const { id: subjectId, chapterIndex: chapterIndexParam } = useParams<{ id: string, chapterIndex?: string }>();
   const navigate = useNavigate();
   const { progress } = useAppStore();
   const [currentChapterIndex, setCurrentChapterIndex] = useState(
-    chapterIndex ? parseInt(chapterIndex, 10) : 0
+    chapterIndexParam ? parseInt(chapterIndexParam, 10) : 0
   );
 
-  const subject = SUBJECTS.find(s => s.id === id);
-  if (!subject) return <div className="p-8 text-center">Sujet non trouvé.</div>;
+  const subject = SUBJECTS.find(s => s.id === subjectId);
+  
+  if (!subject || !subject.chapters || subject.chapters.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center space-y-6">
+        <div className="bg-rose-100 p-4 rounded-full text-rose-600">
+          <BookOpen className="w-12 h-12" />
+        </div>
+        <h1 className="text-2xl font-black italic uppercase italic">Matière ou Chapitre introuvable</h1>
+        <p className="text-muted-foreground">Nous n'avons pas pu charger le contenu de cette leçon.</p>
+        <Button onClick={() => navigate(-1)} className="w-full max-w-xs">
+          Retour
+        </Button>
+      </div>
+    );
+  }
 
   const currentChapter = subject.chapters[currentChapterIndex];
+
+  if (!currentChapter) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center space-y-6">
+        <div className="bg-rose-100 p-4 rounded-full text-rose-600">
+          <BookOpen className="w-12 h-12" />
+        </div>
+        <h1 className="text-2xl font-black italic uppercase italic">Chapitre introuvable</h1>
+        <p className="text-muted-foreground">Ce chapitre n'existe pas pour cette matière.</p>
+        <Button onClick={() => navigate(ROUTE_PATHS.SUBJECT_DETAIL.replace(':id', subjectId || ''))} className="w-full max-w-xs">
+          Retour au sujet
+        </Button>
+      </div>
+    );
+  }
+
   const progressPercent = Math.round(((currentChapterIndex + 1) / subject.chapters.length) * 100);
 
   const handleNext = () => {

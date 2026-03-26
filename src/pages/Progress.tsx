@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import { 
   Trophy, 
@@ -352,7 +353,7 @@ export default function ProgressPage() {
                                            ? 'bg-primary shadow-[0_0_8px_rgba(79,70,229,0.4)]'
                                            : 'bg-slate-100'
                                      }`}
-                                     title={dateString}
+                                     title={dateStr}
                                   />
                                );
                             })}

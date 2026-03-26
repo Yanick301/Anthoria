@@ -68,7 +68,7 @@ const Onboarding: React.FC = () => {
                     Propulser ton avenir
                   </p>
                   <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
-                    Althoria
+                    Anthoria
                   </h1>
                   <p className="text-sm text-muted-foreground max-w-sm mx-auto font-medium">
                     Ton compagnon de réussite intelligent pour le BAC au Bénin.

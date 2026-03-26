@@ -53,6 +53,7 @@ export default function ChallengeMatch() {
   useEffect(() => {
     try {
       if (payload) {
+        const CURRENT_VERSION = '1.0.5';
         const decoded = JSON.parse(atob(payload)) as ChallengeData;
         setChallengeData(decoded);
         
@@ -162,6 +163,20 @@ export default function ChallengeMatch() {
 
   // PLAY PHASE
   if (phase === 'play') {
+    if (exercises.length === 0) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center space-y-6">
+          <div className="bg-rose-100 p-4 rounded-full text-rose-600">
+            <HelpCircle className="w-12 h-12" />
+          </div>
+          <h1 className="text-2xl font-black italic uppercase">Aucun exercice disponible</h1>
+          <p className="text-muted-foreground">Ce défi ne contient aucun exercice valide.</p>
+          <Button onClick={() => navigate(ROUTE_PATHS.HOME)} className="w-full max-w-xs">
+            Retour à l'accueil
+          </Button>
+        </div>
+      );
+    }
     const current = exercises[currentIndex];
     const subject = subjects.find(s => s.id === current.subjectId);
 
